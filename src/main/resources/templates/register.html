@@ -13,6 +13,9 @@
     <link th:href="@{/css/plugins/iCheck/custom.css}" rel="stylesheet"/>
     <link th:href="@{/css/animate.css}" rel="stylesheet"/>
     <link th:href="@{/css/style.css}" rel="stylesheet"/>
+    <!-- Sweet Alert -->
+    <link th:href="@{/css/plugins/sweetalert/sweetalert.css}" rel="stylesheet"/>
+
 
 </head>
 
@@ -21,40 +24,100 @@
     <div class="middle-box text-center loginscreen   animated fadeInDown">
         <div>
             <h3>集团商务销售管理系统</h3>
-            <form class="m-t" role="form" action="login.html">
+            <form class="m-t" role="form" action="/admin/register" method="post">
                 <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Name" required=""/>
+                    <input type="text" class="form-control" placeholder="Name" id="userName" name="userName" required=""/>
                 </div>
                 <div class="form-group">
-                    <input type="email" class="form-control" placeholder="Email" required=""/>
+                    <input type="email" class="form-control" placeholder="Email" id="email" name="email" required=""/>
                 </div>
                 <div class="form-group">
-                    <input type="password" class="form-control" placeholder="Password" required=""/>
+                    <input type="password" class="form-control" placeholder="Password" id="password" name="password" required=""/>
+                </div>
+                <div class="form-group">
+                    <input type="password" class="form-control" placeholder="Telephone" id="telephone" name="telephone" required=""/>
                 </div>
                 <div class="form-group">
                         <div class="checkbox i-checks"><label> <input type="checkbox"/><i></i> Agree the terms and policy </label></div>
                 </div>
-                <button type="submit" class="btn btn-primary block full-width m-b">Register</button>
+                <button type="submit" class="btn btn-primary block full-width m-b" onclick="check()">Register</button>
 
                 <p class="text-muted text-center"><small>Already have an account?</small></p>
-                <a class="btn btn-sm btn-white btn-block" th:href="login" href="login.html">Login</a>
+                <a class="btn btn-sm btn-white btn-block" th:action="@{/admin/login}" >Login</a>
             </form>
         </div>
     </div>
 
     <!-- Mainly scripts -->
-    <script src="js/jquery-2.1.1.js"></script>
-    <script src="js/bootstrap.min.js"></script>
+    <script th:src="@{/js/jquery-2.1.1.js}"></script>
+    <script th:src="@{/js/bootstrap.min.js}"></script>
     <!-- iCheck -->
-    <script src="js/plugins/iCheck/icheck.min.js"></script>
+    <script th:src="@{/js/plugins/iCheck/icheck.min.js}"></script>
+    <!-- Sweet alert -->
+    <script th:src="@{/js/plugins/sweetalert/sweetalert.min.js}"></script>
+
     <script>
         $(document).ready(function(){
             $('.i-checks').iCheck({
                 checkboxClass: 'icheckbox_square-green',
-                radioClass: 'iradio_square-green',
+                radioClass: 'iradio_square-green'
             });
         });
+
+        function check() {
+            var name= $('#userName').val();
+            var email = $('#email').val();
+            var telephone = $('#telephone').val();
+            var password = $('#password').val();
+            //debugger;
+            var judge_email = /^(\w-*\.*)+@(\w-?)+(\.\w{2,})+$/; //验证邮箱的正则表达式
+            var judge_telephone = /^1\d{10}$/ ;  //验证手机号的正则表达式
+            var judge_name = /^[0-9]+.?[0-9]*$/; //验证用户名是否为数字
+            var judge_password = /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{5,15}$/; //验证密码,6-16位，由数字和字母组成
+            if(judge_name.test(name)){
+                swal({
+                    title : "温馨提示",
+                    text : "用户名不能为纯数字"
+                });
+                //alert("用户名不能为纯数字");
+            }
+            if(judge_email.test(email)){
+                swal({
+                    title : "温馨提示",
+                    text : "邮箱格式错误"
+                });
+                //alert("用户名不能为纯数字");
+            }
+            if(judge_telephone.test(telephone)){
+                swal({
+                    title : "温馨提示",
+                    text : "手机号码格式不对"
+                });
+                //alert("用户名不能为纯数字");
+            }
+            if(judge_password.test(password)){
+                swal({
+                    title : "温馨提示",
+                    text : "密码由数字和字母组成，长度6-16位"
+                });
+                //alert("用户名不能为纯数字");
+            }
+        }
     </script>
+
+    <script th:inline="javascript">
+        var msg = [[${msg}]];
+        $(document).ready(function () {
+            if(msg!=null){
+                swal({
+                    title : "温馨提示",
+                    text : msg
+                });
+            }
+        });
+    </script>
+
+
 </body>
 
 </html>

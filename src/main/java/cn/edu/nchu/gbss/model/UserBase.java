@@ -8,6 +8,7 @@ import java.io.Serializable;
 
 import com.baomidou.mybatisplus.annotations.Version;
 
+import com.baomidou.mybatisplus.enums.IdType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -32,7 +33,7 @@ public class UserBase extends Model<UserBase> {
 
     private static final long serialVersionUID = 1L;
 
-    @TableId("user_id")
+    @TableId(value = "user_id",type = IdType.AUTO)
     private Integer userId;
     @TableField("user_name")
     private String userName;

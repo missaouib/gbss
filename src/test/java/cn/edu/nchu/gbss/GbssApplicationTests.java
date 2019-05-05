@@ -2,6 +2,7 @@ package cn.edu.nchu.gbss;
 
 import cn.edu.nchu.gbss.mapper.AdminDao;
 import cn.edu.nchu.gbss.model.Admin;
+import cn.edu.nchu.gbss.service.AdminService;
 import com.baomidou.mybatisplus.mapper.Wrapper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -15,6 +16,8 @@ public class GbssApplicationTests {
 
     @Autowired
     private AdminDao adminDao;
+    @Autowired
+    private AdminService adminService;
 
 
     @Test
@@ -38,6 +41,15 @@ public class GbssApplicationTests {
                 .isNotNull("email");
         int delete = adminDao.delete(queryWrapper);
         System.out.println("delete return count = " + delete);*/
+    }
+
+    @Test
+    public void select(){
+        Admin admin =new Admin();
+        admin.setAdminId(1);
+        admin.setPassword("admin");
+        Admin admin1=adminDao.selectOne(admin);
+        System.out.println(admin1.toString());
     }
 
 }

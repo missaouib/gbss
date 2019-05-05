@@ -8,6 +8,7 @@ import java.io.Serializable;
 
 import com.baomidou.mybatisplus.annotations.Version;
 
+import com.baomidou.mybatisplus.enums.IdType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -32,7 +33,7 @@ public class UserPoint extends Model<UserPoint> {
 
     private static final long serialVersionUID = 1L;
 
-    @TableId("point_id")
+    @TableId(value = "point_id",type = IdType.AUTO)
     private Integer pointId;
     @TableField("user_id")
     private Integer userId;
