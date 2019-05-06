@@ -6,7 +6,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-<title>GBSS</title>
+<title>GBSS | Dashboard</title>
 
 <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" />
 <link th:href="@{/font-awesome/css/font-awesome.css}" rel="stylesheet" />
@@ -18,9 +18,9 @@
 
 <body>
     <div id="wrapper">
-    	<nav class="navbar-default navbar-static-side" role="navigation" th:include="nav :: navigation"></nav>
+    	<nav class="navbar-default navbar-static-side" role="navigation" th:include="/commons/nav :: navigation"></nav>
 	    <div id="page-wrapper" class="gray-bg">
-        	<div class="border-bottom" th:include="header :: headerTop"></div>
+        	<div class="border-bottom" th:include="/commons/header :: headerTop"></div>
             <div class="wrapper wrapper-content">
             
         		<div class="row">
@@ -428,7 +428,7 @@
                     </div>
                 </div>
             </div>
-        	<div class="footer" th:include="footer :: copyright"></div>
+        	<div class="footer" th:include="/commons/footer :: footer"></div>
         </div>
     </div>
 	
