@@ -25,6 +25,11 @@ public class AdminLoginController {
     @Autowired
     private AdminService adminService;
 
+    /**
+     * @description: 管理员登录
+     * @param:
+     * @return:
+     */
     @RequestMapping("/login")
     public String loginPost(Admin admin, Model model, HttpSession httpSession) {
         System.out.println(admin.toString());
@@ -41,7 +46,7 @@ public class AdminLoginController {
     }
 
     /**
-     * @description: 用户登出控制
+     * @description: 管理员登出控制
      * @param:
      * @return:
      */

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>GBSS | 用户积分规则</title>
+
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" />
+    <link th:href="@{/font-awesome/css/font-awesome.css}" rel="stylesheet" />
+    <link th:href="@{/css/style.css}" rel="stylesheet" />
+
+    <link th:href="@{/css/plugins/iCheck/custom.css}" rel="stylesheet"/>
+    <link th:href="@{/css/plugins/footable/footable.core.css}" rel="stylesheet"/>
+
+    <!-- Mainly scripts -->
+    <script th:src="@{/js/jquery-2.1.1.js}"></script>
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+    <script th:src="@{/js/plugins/metisMenu/jquery.metisMenu.js}"></script>
+    <script th:src="@{/js/plugins/slimscroll/jquery.slimscroll.min.js}"></script>
+
+    <!-- Peity -->
+    <script th:src="@{/js/plugins/peity/jquery.peity.min.js}"></script>
+
+    <!-- Custom and plugin javascript -->
+    <script th:src="@{/js/inspinia.js}"></script>
+    <script th:src="@{/js/plugins/pace/pace.min.js}"></script>
+
+    <!-- iCheck -->
+    <script th:src="@{/js/plugins/iCheck/icheck.min.js}"></script>
+
+    <!-- Peity -->
+    <script th:src="@{/js/demo/peity-demo.js}"></script>
+
+    <!-- FooTable -->
+    <script th:src="@{/js/plugins/footable/footable.all.min.js}"></script>
+
+    <!-- common -->
+    <script th:src="@{/js/common.js}"></script>
+
+
+</head>
+<body>
+    <div id="wrapper">
+        <nav class="navbar-default navbar-static-side" role="navigation" th:include="/commons/nav :: navigation"></nav>
+        <div id="page-wrapper" class="gray-bg">
+            <div class="border-bottom" th:include="/commons/header :: headerTop"></div>
+            <div class="row wrapper border-bottom white-bg page-heading" th:fragment="headerNav">
+                <div class="col-lg-10">
+                    <h2>积分规则</h2>
+                    <ol class="breadcrumb">
+                        <li>
+                            <a th:href="@{/admin/dashboard}">首页</a>
+                        </li>
+                        <li>
+                            <a>管理员模块</a>
+                        </li>
+                        <li class="active">
+                            <strong>积分规则</strong>
+                        </li>
+                    </ol>
+                </div>
+                <div class="col-lg-2">
+                </div>
+            </div>
+
+            <div class="wrapper wrapper-content animated fadeInRight">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="ibox float-e-margins">
+                            <div class="ibox-title">
+                                <h5>搜索&amp;操作</h5>
+                                <div class="ibox-tools">
+                                    <a class="collapse-link">
+                                        <i class="fa fa-chevron-up"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="ibox-content" style="display: block;">
+                                <form action="/admin/findAdmin">
+                                    <div class="row">
+                                        <div class="col-sm-2 m-b-xs">
+                                            <input id="adminId" name="adminId" placeholder="按管理员ID查找" class="form-control" type="text" />
+                                        </div>
+                                        <div class="col-sm-2 m-b-xs">
+                                            <input id="name" name="ruleId" placeholder="按规则名称查找" class="form-control" type="text" />
+                                        </div>
+                                        <div class="col-sm-2 m-b-xs">
+                                            <input id="description" name="description" placeholder="按规则描述查找" class="form-control" type="text" />
+                                        </div>
+                                        <div class="col-sm-2 m-b-xs">
+                                            <button class="btn btn-primary select_btn" type="submit"><i class="fa fa-search"></i>&nbsp;&nbsp;&nbsp;&nbsp;<strong>搜索</strong></button>
+                                        </div>
+                                    </div>
+                                </form>
+                                <div class="row">
+                                    <div class="col-sm-6 m-b-xs">
+                                        <a class="btn btn-white add_btn" data-toggle="modal" data-target="#addUserPointRules"><i class="fa fa-plus"></i>&nbsp;&nbsp;&nbsp;&nbsp;新增积分规则&nbsp;&nbsp;&nbsp;&nbsp;</a>
+                                        <a class="btn btn-danger delete_btn" data-toggle="modal" data-target="#deleteAllUserPointRules"><i class="fa fa-trash-o"></i>&nbsp;&nbsp;&nbsp;&nbsp;批量删除&nbsp;&nbsp;&nbsp;&nbsp;</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="ibox float-e-margins">
+                            <div class="ibox-title">
+                                <h5>积分规则列表</h5>
+                                <div class="ibox-tools">
+                                    <a class="collapse-link">
+                                        <i class="fa fa-chevron-up"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="ibox-content">
+                                <div class="table-responsive">
+                                    <table class=" table table-hover" data-page-size="10">
+                                        <thead>
+                                        <tr align="center">
+                                            <td width="1%"><input type="checkbox" style="margin-right: 5px" name="allcheck"/></td>
+                                            <td class="col-md-1">积分规则ID</td>
+                                            <td class="col-md-1">管理员ID </td>
+                                            <td class="col-md-1">规则名称</td>
+                                            <td class="col-md-1">规则描述</td>
+                                            <td class="col-md-1">创建时间</td>
+                                            <td class="col-md-1">操作</td>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr align="center" th:each="userPointRules : ${userPointRulesList}">
+                                            <td><input type="checkbox" name="check" value="${userPointRules.ruleId}" class="del" style="margin-right: 5px" /></td>
+                                            <td th:text="${userPointRules.ruleId}"></td>
+                                            <td th:text="${userPointRules.adminId}"></td>
+                                            <td th:text="${userPointRules.name}"></td>
+                                            <td th:text="${userPointRules.description}"></td>
+                                            <td th:text="${userPointRules.createDate}"></td>
+                                            <td>
+                                                <a data-toggle="modal" data-target="#updateUserPointRules" title="修改" onclick="updade(adminRoleInf)"><i class="fa fa-edit text-navy"></i></a>
+                                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                                <a data-toggle="modal" data-target="#deleteUserPointRules"  title="删除" ><i class="fa fa-trash-o text-navy"></i></a>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer" th:include="/commons/footer :: footer"></div>
+        </div>
+    </div>
+</body>
+</html>

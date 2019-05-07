@@ -133,9 +133,9 @@
                                             <td th:text="${admin.telephone}"></td>
                                             <td th:text="${admin.email}"></td>
                                             <td>
-                                                <a data-toggle="modal" data-target="#updateAdmin" title="修改"><i class="fa fa-edit text-navy"></i></a>
+                                                <a data-toggle="modal" data-target="#updateAdmin" title="修改" onclick="updadeAdmin(${admin})"><i class="fa fa-edit text-navy"></i></a>
                                                 &nbsp;&nbsp;&nbsp;&nbsp;
-                                                <a data-toggle="modal" data-target="#deleteAdmin"  title="删除"><i class="fa fa-trash-o text-navy"></i></a>
+                                                <a data-toggle="modal" data-target="#deleteAdmin"  title="删除" ><i class="fa fa-trash-o text-navy"></i></a>
                                             </td>
                                         </tr>
                                         </tbody>
@@ -234,6 +234,7 @@
                     </div>
                     <!-- .modal-header -->
                     <div class="modal-body addModal">
+                        <input type="hidden" name="adminId" value="" id="adminId"/>
                         <div>
                             <label>用户名</label>
                             <input type="text" value="" id='admin_name_update' class="form-control" name="userName"
@@ -278,7 +279,7 @@
     </div>
     <!--.modal-->
 
-    <!-- 修改模态框，单击修改按钮，弹出表单 -->
+    <!-- 删除模态框，单击修改按钮，弹出表单 -->
     <div class="modal fade" id="deleteAdmin" tabindex="-1" role="dialog" data-toggle="modal"
          aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
 
@@ -338,6 +339,16 @@
     </div>
     <!--.modal-->
 
+
+    <script>
+        function updadeAdmin(admin) {
+            $("#admin_name_update").val();
+            $("#admin_password_update").val();
+            $("#admin_telephone_update").val();
+            $("#admin_email_update").val();
+            $("#adminId").val();
+        }
+    </script>
 
 
 

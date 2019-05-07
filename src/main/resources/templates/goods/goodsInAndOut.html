@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>GBSS | 商品进销存</title>
+
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" />
+    <link th:href="@{/font-awesome/css/font-awesome.css}" rel="stylesheet" />
+    <link th:href="@{/css/style.css}" rel="stylesheet" />
+
+    <link th:href="@{/css/plugins/iCheck/custom.css}" rel="stylesheet"/>
+    <link th:href="@{/css/plugins/footable/footable.core.css}" rel="stylesheet"/>
+
+    <!-- Mainly scripts -->
+    <script th:src="@{/js/jquery-2.1.1.js}"></script>
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+    <script th:src="@{/js/plugins/metisMenu/jquery.metisMenu.js}"></script>
+    <script th:src="@{/js/plugins/slimscroll/jquery.slimscroll.min.js}"></script>
+
+    <!-- Peity -->
+    <script th:src="@{/js/plugins/peity/jquery.peity.min.js}"></script>
+
+    <!-- Custom and plugin javascript -->
+    <script th:src="@{/js/inspinia.js}"></script>
+    <script th:src="@{/js/plugins/pace/pace.min.js}"></script>
+
+    <!-- iCheck -->
+    <script th:src="@{/js/plugins/iCheck/icheck.min.js}"></script>
+
+    <!-- Peity -->
+    <script th:src="@{/js/demo/peity-demo.js}"></script>
+
+    <!-- FooTable -->
+    <script th:src="@{/js/plugins/footable/footable.all.min.js}"></script>
+
+    <!-- common -->
+    <script th:src="@{/js/common.js}"></script>
+
+
+</head>
+<body>
+    <div id="wrapper">
+        <nav class="navbar-default navbar-static-side" role="navigation" th:include="/commons/nav :: navigation"></nav>
+        <div id="page-wrapper" class="gray-bg">
+            <div class="border-bottom" th:include="/commons/header :: headerTop"></div>
+            <div class="row wrapper border-bottom white-bg page-heading" th:fragment="headerNav">
+                <div class="col-lg-10">
+                    <h2>商品进销存</h2>
+                    <ol class="breadcrumb">
+                        <li>
+                            <a th:href="@{/admin/dashboard}">首页</a>
+                        </li>
+                        <li>
+                            <a>商品模块</a>
+                        </li>
+                        <li class="active">
+                            <strong>商品进销存</strong>
+                        </li>
+                    </ol>
+                </div>
+                <div class="col-lg-2">
+                </div>
+            </div>
+
+            <div class="wrapper wrapper-content animated fadeInRight">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="ibox float-e-margins">
+                            <div class="ibox-title">
+                                <h5>搜索&amp;操作</h5>
+                                <div class="ibox-tools">
+                                    <a class="collapse-link">
+                                        <i class="fa fa-chevron-up"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="ibox-content" style="display: block;">
+                                <form action="/admin/findAdmin">
+                                    <div class="row">
+                                        <div class="col-sm-2 m-b-xs">
+                                            <input id="goodsId" name="goodsId" placeholder="按商品ID查找" class="form-control" type="text" />
+                                        </div>
+                                        <div class="col-sm-2 m-b-xs">
+                                            <input id="visitCount" name="visitCount" placeholder="按浏览次数查找" class="form-control" type="text" />
+                                        </div>
+                                        <div class="col-sm-2 m-b-xs">
+                                            <input id="totalSales" name="totalSales" placeholder="按销售总量查找" class="form-control" type="text" />
+                                        </div>
+                                        <div class="col-sm-2 m-b-xs">
+                                            <button class="btn btn-primary select_btn" type="submit"><i class="fa fa-search"></i>&nbsp;&nbsp;&nbsp;&nbsp;<strong>搜索</strong></button>
+                                        </div>
+                                    </div>
+                                </form>
+                                <div class="row">
+                                    <div class="col-sm-6 m-b-xs">
+                                        <a class="btn btn-white add_btn" data-toggle="modal" data-target="#addGoods"><i class="fa fa-plus"></i>&nbsp;&nbsp;&nbsp;&nbsp;新增商品进销存信息&nbsp;&nbsp;&nbsp;&nbsp;</a>
+                                        <a class="btn btn-danger delete_btn" data-toggle="modal" data-target="#deleteAllGoodsInAndOut"><i class="fa fa-trash-o"></i>&nbsp;&nbsp;&nbsp;&nbsp;批量删除&nbsp;&nbsp;&nbsp;&nbsp;</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="ibox float-e-margins">
+                            <div class="ibox-title">
+                                <h5>商品进销存列表</h5>
+                                <div class="ibox-tools">
+                                    <a class="collapse-link">
+                                        <i class="fa fa-chevron-up"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="ibox-content">
+                                <div class="table-responsive">
+                                    <table class=" table table-hover" data-page-size="10">
+                                        <thead>
+                                        <tr align="center">
+                                            <td width="1%"><input type="checkbox" style="margin-right: 5px" name="allcheck"/></td>
+                                            <td class="col-md-1">进销存表ID</td>
+                                            <td class="col-md-1">商品ID</td>
+                                            <td class="col-md-1">管理员ID</td>
+                                            <td class="col-md-1">出入库数量</td>
+                                            <td class="col-md-1">单价</td>
+                                            <td class="col-md-1">小计金额</td>
+                                            <td class="col-md-1">旧库存</td>
+                                            <td class="col-md-1">新库存</td>
+                                            <td class="col-md-1">出入库方向</td>
+                                            <td class="col-md-1">出入库类型</td>
+                                            <td class="col-md-1">订单编号</td>
+                                            <td class="col-md-1">供应商编号</td>
+                                            <td class="col-md-1">备注信息</td>
+                                            <td class="col-md-1">出入库结果</td>
+                                            <td class="col-md-1">出入库日期</td>
+                                            <td class="col-md-1">操作</td>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr align="center" th:each="goodsInAndOut : ${goodsInAndOutList}">
+                                            <td><input type="checkbox" name="check" value="${goodsInAndOut.inAndOutId}" class="del" style="margin-right: 5px" /></td>
+                                            <td th:text="${goodsInAndOut.inAndOutId}"></td>
+                                            <td th:text="${goodsInAndOut.goodsId}"></td>
+                                            <td th:text="${goodsInAndOut.adminId}"></td>
+                                            <td th:text="${goodsInAndOut.number}"></td>
+                                            <td th:text="${goodsInAndOut.price}"></td>
+                                            <td th:text="${goodsInAndOut.subTotal}"></td>
+                                            <td th:text="${goodsInAndOut.stockOld}"></td>
+                                            <td th:text="${goodsInAndOut.stockNew}"></td>
+                                            <td th:text="${goodsInAndOut.direction}"></td>
+                                            <td th:text="${goodsInAndOut.operateType}"></td>
+                                            <td th:text="${goodsInAndOut.orderId}"></td>
+                                            <td th:text="${goodsInAndOut.providerId}"></td>
+                                            <td th:text="${goodsInAndOut.remark}"></td>
+                                            <td th:text="${goodsInAndOut.result}"></td>
+                                            <td th:text="${goodsInAndOut.inOutDatetime}"></td>
+                                            <td>
+                                                <a data-toggle="modal" data-target="#updateGoodsInAndOut" title="修改" onclick="updade(adminRoleInf)"><i class="fa fa-edit text-navy"></i></a>
+                                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                                <a data-toggle="modal" data-target="#deleteGoodsInAndOut"  title="删除" ><i class="fa fa-trash-o text-navy"></i></a>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer" th:include="/commons/footer :: footer"></div>
+        </div>
+    </div>
+</body>
+</html>
