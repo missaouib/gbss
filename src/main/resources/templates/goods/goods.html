@@ -10,6 +10,8 @@
 
     <link th:href="@{/css/plugins/iCheck/custom.css}" rel="stylesheet"/>
     <link th:href="@{/css/plugins/footable/footable.core.css}" rel="stylesheet"/>
+    <!-- Sweet Alert -->
+    <link th:href="@{/css/plugins/sweetalert/sweetalert.css}" rel="stylesheet"/>
 
     <!-- Mainly scripts -->
     <script th:src="@{/js/jquery-2.1.1.js}"></script>
@@ -35,6 +37,8 @@
 
     <!-- common -->
     <script th:src="@{/js/common.js}"></script>
+    <!-- Sweet alert -->
+    <script th:src="@{/js/plugins/sweetalert/sweetalert.min.js}"></script>
 
 
 </head>
@@ -75,7 +79,7 @@
                                 </div>
                             </div>
                             <div class="ibox-content" style="display: block;">
-                                <form action="/admin/findAdmin">
+                                <form action="/goods/findGoods">
                                     <div class="row">
                                         <div class="col-sm-2 m-b-xs">
                                             <input id="name" name="name" placeholder="按商品名称查找" class="form-control" type="text" />

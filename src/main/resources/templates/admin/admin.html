@@ -10,31 +10,29 @@
 
     <link th:href="@{/css/plugins/iCheck/custom.css}" rel="stylesheet"/>
     <link th:href="@{/css/plugins/footable/footable.core.css}" rel="stylesheet"/>
+    <!-- Sweet Alert -->
+    <link th:href="@{/css/plugins/sweetalert/sweetalert.css}" rel="stylesheet"/>
 
     <!-- Mainly scripts -->
     <script th:src="@{/js/jquery-2.1.1.js}"></script>
     <script th:src="@{/js/bootstrap.min.js}"></script>
     <script th:src="@{/js/plugins/metisMenu/jquery.metisMenu.js}"></script>
     <script th:src="@{/js/plugins/slimscroll/jquery.slimscroll.min.js}"></script>
-
     <!-- Peity -->
     <script th:src="@{/js/plugins/peity/jquery.peity.min.js}"></script>
-
     <!-- Custom and plugin javascript -->
     <script th:src="@{/js/inspinia.js}"></script>
     <script th:src="@{/js/plugins/pace/pace.min.js}"></script>
-
     <!-- iCheck -->
     <script th:src="@{/js/plugins/iCheck/icheck.min.js}"></script>
-
     <!-- Peity -->
     <script th:src="@{/js/demo/peity-demo.js}"></script>
-
     <!-- FooTable -->
     <script th:src="@{/js/plugins/footable/footable.all.min.js}"></script>
-
     <!-- common -->
     <script th:src="@{/js/common.js}"></script>
+    <!-- Sweet alert -->
+    <script th:src="@{/js/plugins/sweetalert/sweetalert.min.js}"></script>
 
 
 </head>
@@ -126,27 +124,19 @@
                                         </thead>
                                         <tbody>
                                         <tr align="center" th:each="admin : ${adminList}">
-                                            <td><input type="checkbox" name="check" value="${admin.adminId}" class="del" style="margin-right: 5px" /></td>
+                                            <td><input type="checkbox" name="check" th:value="${admin.adminId}" class="del" style="margin-right: 5px" /></td>
                                             <td th:text="${admin.adminId}"></td>
                                             <td th:text="${admin.userName}"></td>
                                             <td th:text="${admin.password}"></td>
                                             <td th:text="${admin.telephone}"></td>
                                             <td th:text="${admin.email}"></td>
                                             <td>
-                                                <a data-toggle="modal" data-target="#updateAdmin" title="修改" onclick="updadeAdmin(${admin})"><i class="fa fa-edit text-navy"></i></a>
+                                                <a data-toggle="modal" data-target="#updateAdmin" title="修改" class="adminEdit1"><i class="fa fa-edit text-navy"></i></a>
                                                 &nbsp;&nbsp;&nbsp;&nbsp;
-                                                <a data-toggle="modal" data-target="#deleteAdmin"  title="删除" ><i class="fa fa-trash-o text-navy"></i></a>
+                                                <a data-toggle="modal" data-target="#deleteAdmin" title="删除" class="adminEdit2"><i class="fa fa-trash-o text-navy"></i></a>
                                             </td>
                                         </tr>
                                         </tbody>
-                                        <!--分页-->
-                                        <tfoot>
-                                        <tr>
-                                            <td colspan="7">
-                                                <ul id="pageHTML" class="pagination pull-right"></ul>
-                                            </td>
-                                        </tr>
-                                        </tfoot>
                                     </table>
                                 </div>
                             </div>
@@ -196,7 +186,7 @@
                         </div>
                         <div>
                             <label>管理员角色</label>
-                            <select name="rule_name">
+                            <select name="level">
                                 <option>--请选择--</option>
                                 <option value="3">超级管理员</option>
                                 <option value="2">高级管理员</option>
@@ -235,15 +225,16 @@
                     <!-- .modal-header -->
                     <div class="modal-body addModal">
                         <input type="hidden" name="adminId" value="" id="adminId"/>
+                        <!--<input type="hidden" name="status" value="1" id="status"/>-->
                         <div>
                             <label>用户名</label>
                             <input type="text" value="" id='admin_name_update' class="form-control" name="userName"
-                                   errormsg="请输入管理员名称" title=""/>
+                                   title="" required=""/>
                         </div>
                         <div>
                             <label>登入密码</label>
-                            <input type="text" value="" id='admin_password_update' class="form-control" name="passeword"
-                                   errormsg="请输入登录密码" title=""/>
+                            <input type="text" value="" id='admin_password_update' class="form-control" name="password"
+                                   title="" required=""/>
                         </div>
                         <div>
                             <label>电话号码</label>
@@ -255,15 +246,15 @@
                             <input type="text" value="" id='admin_email_update' class="form-control" name="email"
                                    title="" required=""/>
                         </div>
-                        <div>
+                        <!--<div>
                             <label>管理员角色</label>
-                            <select name="rule_name">
-                                <option>--请选择--</option>
+                            <select name="level">
+                                <option>-&#45;&#45;请选择-&#45;&#45;</option>
                                 <option value="3">超级管理员</option>
                                 <option value="2">高级管理员</option>
                                 <option value="1">普通管理员</option>
                             </select>
-                        </div>
+                        </div>-->
                     </div>
                     <!-- modal-body -->
 
@@ -295,38 +286,9 @@
                     </div>
                     <!-- .modal-header -->
                     <div class="modal-body addModal">
-                        <div>
-                            <label>用户名</label>
-                            <input type="text" value="" id='admin_name_delete' class="form-control" name="userName"
-                                   errormsg="请输入管理员名称" title=""/>
-                        </div>
-                        <div>
-                            <label>登入密码</label>
-                            <input type="text" value="" id='admin_password_delete' class="form-control" name="passeword"
-                                   errormsg="请输入登录密码" title=""/>
-                        </div>
-                        <div>
-                            <label>电话号码</label>
-                            <input type="text" value="" id='admin_telephone_delete' class="form-control" name="telephone"
-                                   title="" required=""/>
-                        </div>
-                        <div>
-                            <label>邮箱地址</label>
-                            <input type="text" value="" id='admin_email_delete' class="form-control" name="email"
-                                   title="" required=""/>
-                        </div>
-                        <div>
-                            <label>管理员角色</label>
-                            <select name="rule_name">
-                                <option>--请选择--</option>
-                                <option value="3">超级管理员</option>
-                                <option value="2">高级管理员</option>
-                                <option value="1">普通管理员</option>
-                            </select>
-                        </div>
+                        <input type="hidden" name="adminId" value="" id="deleteAdminId"/>
                     </div>
                     <!-- modal-body -->
-
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default closeBtn"
                                 data-dismiss="modal">取消
@@ -341,46 +303,37 @@
 
 
     <script>
-        function updadeAdmin(admin) {
-            $("#admin_name_update").val();
-            $("#admin_password_update").val();
-            $("#admin_telephone_update").val();
-            $("#admin_email_update").val();
-            $("#adminId").val();
-        }
+        $(".adminEdit1").click(function (){
+            var adminId = $(this).parent().parent().children().eq(1).text();
+            var userName = $(this).parent().parent().children().eq(2).text();
+            var password = $(this).parent().parent().children().eq(3).text();
+            var telephone = $(this).parent().parent().children().eq(4).text();
+            var email = $(this).parent().parent().children().eq(5).text();
+            $("#adminId").val(adminId);
+            $("#admin_name_update").val(userName);
+            $("#admin_password_update").val(password);
+            $("#admin_telephone_update").val(telephone);
+            $("#admin_email_update").val(email);
+        })
+
+        $(".adminEdit2").click(function () {
+            var adminId = $(this).parent().parent().children().eq(1).text();
+            $("#deleteAdminId").val(adminId);
+
+        })
     </script>
-
-
 
     <script th:inline="javascript">
-        var pageHTML = [[${pageHTML}]];
+        var msg = [[${msg}]];
         $(document).ready(function () {
-            $("#pageHTML").html(pageHTML);
-        });
-
-        /*<![CDATA[*/
-        function updateState(id,state,commendState){
-            var deleteTag;
-            if(state==2){
-                deleteTag = confirm("确定删除此条信息?");
-            } else {
-                deleteTag = true;
-            }
-            if(deleteTag){
-                $.ajax({
-                    type: "POST",
-                    url: "newsEditState?id="+id+"&state="+state+"&commendState="+commendState,
-                    contentType: "application/json; charset=utf-8",
-                    success: function(msg){
-                        window.location.reload();
-                    },
-                    error: function(){
-                        alert("系统异常！");
-                    }
+            if(msg!=null){
+                swal({
+                    title : "温馨提示",
+                    text : msg
                 });
             }
-        }
-        /*]]>*/
+        });
     </script>
+
 </body>
 </html>

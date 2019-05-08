@@ -10,6 +10,8 @@
 
     <link th:href="@{/css/plugins/iCheck/custom.css}" rel="stylesheet"/>
     <link th:href="@{/css/plugins/footable/footable.core.css}" rel="stylesheet"/>
+    <!-- Sweet Alert -->
+    <link th:href="@{/css/plugins/sweetalert/sweetalert.css}" rel="stylesheet"/>
 
     <!-- Mainly scripts -->
     <script th:src="@{/js/jquery-2.1.1.js}"></script>
@@ -35,6 +37,8 @@
 
     <!-- common -->
     <script th:src="@{/js/common.js}"></script>
+    <!-- Sweet alert -->
+    <script th:src="@{/js/plugins/sweetalert/sweetalert.min.js}"></script>
 
 
 </head>
@@ -75,16 +79,16 @@
                             </div>
                         </div>
                         <div class="ibox-content" style="display: block;">
-                            <form action="/admin/findAdmin">
+                            <form action="/goods-order/findGoodOrder">
                                 <div class="row">
                                     <div class="col-sm-2 m-b-xs">
-                                        <input id="name" name="name" placeholder="按订单ID查找" class="form-control" type="text" />
+                                        <input id="orderNo" name="orderNo" placeholder="按订单单号查找" class="form-control" type="text" />
                                     </div>
                                     <div class="col-sm-2 m-b-xs">
-                                        <input id="stock" name="stock" placeholder="按库存数量查找" class="form-control" type="text" />
+                                        <input id="userId" name="userId" placeholder="按用户ID查找" class="form-control" type="text" />
                                     </div>
                                     <div class="col-sm-2 m-b-xs">
-                                        <input id="costPrice" name="costPrice" placeholder="按成本价格查找" class="form-control" type="text" />
+                                        <input id="goodsId" name="goodsId" placeholder="按商品ID查找" class="form-control" type="text" />
                                     </div>
                                     <div class="col-sm-2 m-b-xs">
                                         <button class="btn btn-primary select_btn" type="submit"><i class="fa fa-search"></i>&nbsp;&nbsp;&nbsp;&nbsp;<strong>搜索</strong></button>

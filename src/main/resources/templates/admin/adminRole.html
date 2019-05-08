@@ -11,6 +11,9 @@
     <link th:href="@{/css/plugins/iCheck/custom.css}" rel="stylesheet"/>
     <link th:href="@{/css/plugins/footable/footable.core.css}" rel="stylesheet"/>
 
+    <!-- Sweet Alert -->
+    <link th:href="@{/css/plugins/sweetalert/sweetalert.css}" rel="stylesheet"/>
+
     <!-- Mainly scripts -->
     <script th:src="@{/js/jquery-2.1.1.js}"></script>
     <script th:src="@{/js/bootstrap.min.js}"></script>
@@ -35,6 +38,8 @@
 
     <!-- common -->
     <script th:src="@{/js/common.js}"></script>
+    <!-- Sweet alert -->
+    <script th:src="@{/js/plugins/sweetalert/sweetalert.min.js}"></script>
 
 
 </head>
@@ -75,7 +80,7 @@
                                 </div>
                             </div>
                             <div class="ibox-content" style="display: block;">
-                                <form action="/admin/findAdmin">
+                                <form action="/admin-role/findRole">
                                     <div class="row">
                                         <div class="col-sm-2 m-b-xs">
                                             <input id="ruleName" name="ruleName" placeholder="按角色名查找" class="form-control" type="text" />
@@ -93,7 +98,7 @@
                                 </form>
                                 <div class="row">
                                     <div class="col-sm-6 m-b-xs">
-                                        <a class="btn btn-white add_btn" data-toggle="modal" data-target="#addAdminRole"><i class="fa fa-plus"></i>&nbsp;&nbsp;&nbsp;&nbsp;新增管理员&nbsp;&nbsp;&nbsp;&nbsp;</a>
+                                        <a class="btn btn-white add_btn" data-toggle="modal" data-target="#addAdminRole"><i class="fa fa-plus"></i>&nbsp;&nbsp;&nbsp;&nbsp;新增管理员角色&nbsp;&nbsp;&nbsp;&nbsp;</a>
                                         <a class="btn btn-danger delete_btn" data-toggle="modal" data-target="#deleteAllAdminRole"><i class="fa fa-trash-o"></i>&nbsp;&nbsp;&nbsp;&nbsp;批量删除&nbsp;&nbsp;&nbsp;&nbsp;</a>
                                     </div>
                                 </div>
@@ -133,20 +138,12 @@
                                             <td th:text="${adminRole.level}"></td>
                                             <td th:text="${adminRole.creatTime}"></td>
                                             <td>
-                                                <a data-toggle="modal" data-target="#updateAdminRole" title="修改" onclick="updadeAdmin(adminRole)"><i class="fa fa-edit text-navy"></i></a>
+                                                <a data-toggle="modal" data-target="#updateAdminRole" title="修改" class="adminRoleEdit1"><i class="fa fa-edit text-navy"></i></a>
                                                 &nbsp;&nbsp;&nbsp;&nbsp;
-                                                <a data-toggle="modal" data-target="#deleteAdminRole"  title="删除" ><i class="fa fa-trash-o text-navy"></i></a>
+                                                <a data-toggle="modal" data-target="#deleteAdminRole" title="删除" class="adminRoleEdit2"><i class="fa fa-trash-o text-navy"></i></a>
                                             </td>
                                         </tr>
                                         </tbody>
-                                        <!--分页-->
-                                        <tfoot>
-                                        <tr>
-                                            <td colspan="7">
-                                                <ul id="pageHTML" class="pagination pull-right"></ul>
-                                            </td>
-                                        </tr>
-                                        </tfoot>
                                     </table>
                                 </div>
                             </div>
@@ -157,5 +154,171 @@
             <div class="footer" th:include="/commons/footer :: footer"></div>
         </div>
     </div>
+
+    <!-- 增加模态框，单击增加按钮，弹出表单 -->
+    <div class="modal fade" id="addAdminRole" tabindex="-1" role="dialog" data-toggle="modal"
+         aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+
+        <div class="modal-dialog" style="width: 400px">
+            <form class="addAdminform" th:action="@{/admin-role/addAdminRole}" method="post" id="AddCheck">
+                <div class="modal-content">
+                    <div class="modal-header"
+                         style="background-color: #00a0f0; color: white;">
+                        <button type="button" class="close" data-dismiss="modal"
+                                aria-hidden="true">&times;
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel1">添加管理员角色</h4>
+                    </div>
+                    <!-- .modal-header -->
+                    <div class="modal-body addModal">
+                        <div>
+                            <label>角色名称</label>
+                            <input type="text" value="" id='adminRole_ruleName_add' class="form-control" name="ruleName"
+                                   title="" required=""/>
+                        </div>
+                        <div>
+                            <label>描述</label>
+                            <input type="text" value="" id='adminRole_description_add' class="form-control" name="description"
+                                   title="" required="" />
+                        </div>
+                        <div>
+                            <label>权限等级</label>
+                            <input type="text" value="" id='adminRole_level_add' class="form-control" name="level"
+                                   title="" required=""/>
+                        </div>
+                    </div>
+                    <!-- modal-body -->
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default closeBtn"
+                                data-dismiss="modal">取消
+                        </button>
+                        <button type="submit" id="submit_add" class="btn btn-primary">添加</button>
+                    </div> <!-- modal-footer -->
+                </div> <!-- /.modal-content -->
+            </form>
+        </div> <!-- /.modal-dialog -->
+    </div>
+    <!--.modal-->
+
+    <!-- 修改模态框，单击修改按钮，弹出表单 -->
+    <div class="modal fade" id="updateAdminRole" tabindex="-1" role="dialog" data-toggle="modal"
+         aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+
+        <div class="modal-dialog" style="width: 400px">
+            <form class="addAdminform" th:action="@{/admin-role/updateAdminRole}" method="post" id="updateCheck">
+                <div class="modal-content">
+                    <div class="modal-header"
+                         style="background-color: #00a0f0; color: white;">
+                        <button type="button" class="close" data-dismiss="modal"
+                                aria-hidden="true">&times;
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel2">修改管理员角色</h4>
+                    </div>
+                    <!-- .modal-header -->
+                    <div class="modal-body addModal">
+                        <input type="hidden" name="adminRoleId" value="" id="adminRoleId"/>
+                        <!--<input type="hidden" name="status" value="1" id="status"/>-->
+                        <div>
+                            <label>角色名称</label>
+                            <input type="text" value="" id='adminRole_ruleName_update' class="form-control" name="ruleName"
+                                   title="" required=""/>
+                        </div>
+                        <div>
+                            <label>描述</label>
+                            <input type="text" value="" id='adminRole_description_update' class="form-control" name="description"
+                                   title="" required="" />
+                        </div>
+                        <div>
+                            <label>权限等级</label>
+                            <input type="text" value="" id='adminRole_level_update' class="form-control" name="level"
+                                   title="" required=""/>
+                        </div>
+                        <!--<div>
+                            <label>管理员角色</label>
+                            <select name="level">
+                                <option>&#45;&#45;请选择&#45;&#45;</option>
+                                <option value="3">超级管理员</option>
+                                <option value="2">高级管理员</option>
+                                <option value="1">普通管理员</option>
+                            </select>
+                        </div>-->
+                    </div>
+                    <!-- modal-body -->
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default closeBtn"
+                                data-dismiss="modal">取消
+                        </button>
+                        <button type="submit" id="submit_update" class="btn btn-primary">修改</button>
+                    </div> <!-- modal-footer -->
+                </div> <!-- /.modal-content -->
+            </form>
+        </div> <!-- /.modal-dialog -->
+    </div>
+    <!--.modal-->
+
+
+    <!-- 删除模态框，单击修改按钮，弹出表单 -->
+    <div class="modal fade" id="deleteAdminRole" tabindex="-1" role="dialog" data-toggle="modal"
+         aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+
+        <div class="modal-dialog" style="width: 400px">
+            <form class="addAdminform" th:action="@{/admin-role/deleteAdminRole}" method="post" id="deleteCheck">
+                <div class="modal-content">
+                    <div class="modal-header"
+                         style="background-color: #00a0f0; color: white;">
+                        <button type="button" class="close" data-dismiss="modal"
+                                aria-hidden="true">&times;
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel3">删除管理员角色</h4>
+                    </div>
+                    <!-- .modal-header -->
+                    <div class="modal-body addModal">
+                        <input type="hidden" name="adminRoleId" value="" id="deleteAdminRoleId"/>
+                    </div>
+                    <!-- modal-body -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default closeBtn"
+                                data-dismiss="modal">取消
+                        </button>
+                        <button type="submit" id="submit_delete" class="btn btn-primary">删除</button>
+                    </div> <!-- modal-footer -->
+                </div> <!-- /.modal-content -->
+            </form>
+        </div> <!-- /.modal-dialog -->
+    </div>
+    <!--.modal-->
+
+    <script>
+        $(".adminRoleEdit1").click(function (){
+            var adminRoleId = $(this).parent().parent().children().eq(1).text();
+            var ruleName = $(this).parent().parent().children().eq(2).text();
+            var description = $(this).parent().parent().children().eq(3).text();
+            var level = $(this).parent().parent().children().eq(4).text();
+            $("#adminRoleId").val(adminRoleId);
+            $("#adminRole_ruleName_update").val(ruleName);
+            $("#adminRole_description_update").val(description);
+            $("#adminRole_level_update").val(level);
+        })
+
+        $(".adminRoleEdit2").click(function () {
+            var adminRoleId = $(this).parent().parent().children().eq(1).text();
+            $("#deleteAdminRoleId").val(adminRoleId);
+
+        })
+    </script>
+
+    <script th:inline="javascript">
+        var msg = [[${msg}]];
+        $(document).ready(function () {
+            if(msg!=null){
+                swal({
+                    title : "温馨提示",
+                    text : msg
+                });
+            }
+        });
+    </script>
 </body>
 </html>

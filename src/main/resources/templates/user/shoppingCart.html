@@ -10,6 +10,8 @@
 
     <link th:href="@{/css/plugins/iCheck/custom.css}" rel="stylesheet"/>
     <link th:href="@{/css/plugins/footable/footable.core.css}" rel="stylesheet"/>
+    <!-- Sweet Alert -->
+    <link th:href="@{/css/plugins/sweetalert/sweetalert.css}" rel="stylesheet"/>
 
     <!-- Mainly scripts -->
     <script th:src="@{/js/jquery-2.1.1.js}"></script>
@@ -35,6 +37,8 @@
 
     <!-- common -->
     <script th:src="@{/js/common.js}"></script>
+    <!-- Sweet alert -->
+    <script th:src="@{/js/plugins/sweetalert/sweetalert.min.js}"></script>
 
 
 </head>
@@ -75,7 +79,7 @@
                                 </div>
                             </div>
                             <div class="ibox-content" style="display: block;">
-                                <form action="/admin/findAdmin">
+                                <form action="/shopping-cart/findShoppingCart">
                                     <div class="row">
                                         <div class="col-sm-2 m-b-xs">
                                             <input id="userId" name="userId" placeholder="按用户id查找" class="form-control" type="text" />
@@ -135,9 +139,9 @@
                                             <td th:text="${shoppingCart.number}"></td>
                                             <td th:text="${shoppingCart.creatTime}"></td>
                                             <td>
-                                                <a data-toggle="modal" data-target="#updateShoppingCart" title="修改" onclick="updade(adminRoleInf)"><i class="fa fa-edit text-navy"></i></a>
+                                                <a data-toggle="modal" data-target="#updateShoppingCart" title="修改" class="shoppingCartEdit1"><i class="fa fa-edit text-navy"></i></a>
                                                 &nbsp;&nbsp;&nbsp;&nbsp;
-                                                <a data-toggle="modal" data-target="#deleteShoppingCart"  title="删除" ><i class="fa fa-trash-o text-navy"></i></a>
+                                                <a data-toggle="modal" data-target="#deleteShoppingCart" title="删除" class="shoppingCartEdit2"><i class="fa fa-trash-o text-navy"></i></a>
                                             </td>
                                         </tr>
                                         </tbody>
@@ -151,5 +155,174 @@
             <div class="footer" th:include="/commons/footer :: footer"></div>
         </div>
     </div>
+
+    <!-- 增加模态框，单击增加按钮，弹出表单 -->
+    <div class="modal fade" id="addShoppingCart" tabindex="-1" role="dialog" data-toggle="modal"
+         aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+
+        <div class="modal-dialog" style="width: 400px">
+            <form class="addAdminform" th:action="@{/shopping-cart/addShoppingCart}" method="post" id="AddCheck">
+                <div class="modal-content">
+                    <div class="modal-header"
+                         style="background-color: #00a0f0; color: white;">
+                        <button type="button" class="close" data-dismiss="modal"
+                                aria-hidden="true">&times;
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel1">新增用户购物车信息</h4>
+                    </div>
+                    <!-- .modal-header -->
+                    <div class="modal-body addModal">
+                        <div>
+                            <label>用户ID</label>
+                            <input type="text" value="" id='userIdAdd' class="form-control" name="userId"
+                                   title="" required=""/>
+                        </div>
+                        <div>
+                            <label>商品ID</label>
+                            <input type="text" value="" id='goodsIdAdd' class="form-control" name="goodsId"
+                                   title="" required="" />
+                        </div>
+                        <div>
+                            <label>商品状态</label>
+                            <input type="text" value="" id='statusAdd' class="form-control" name="status"
+                                   title="" required=""/>
+                        </div>
+                        <div>
+                            <label>购买数量</label>
+                            <input type="text" value="" id='numberAdd' class="form-control" name="number"
+                                   title="" required=""/>
+                        </div>
+                    </div>
+                    <!-- modal-body -->
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default closeBtn"
+                                data-dismiss="modal">取消
+                        </button>
+                        <button type="submit" id="submit_add" class="btn btn-primary">添加</button>
+                    </div> <!-- modal-footer -->
+                </div> <!-- /.modal-content -->
+            </form>
+        </div> <!-- /.modal-dialog -->
+    </div>
+    <!--.modal-->
+
+    <!-- 修改模态框，单击修改按钮，弹出表单 -->
+    <div class="modal fade" id="updateShoppingCart" tabindex="-1" role="dialog" data-toggle="modal"
+         aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+
+        <div class="modal-dialog" style="width: 400px">
+            <form class="addAdminform" th:action="@{/shopping-cart/updateShoppingCart}" method="post" id="updateCheck">
+                <div class="modal-content">
+                    <div class="modal-header"
+                         style="background-color: #00a0f0; color: white;">
+                        <button type="button" class="close" data-dismiss="modal"
+                                aria-hidden="true">&times;
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel2">修改用户购物车信息</h4>
+                    </div>
+                    <!-- .modal-header -->
+                    <div class="modal-body addModal">
+                        <input type="hidden" name="cartId" value="" id="cartIdUpdate"/>
+                        <!--<input type="hidden" name="status" value="1" id="status"/>-->
+                        <div>
+                            <label>用户ID</label>
+                            <input type="text" value="" id='userIdUpdate' class="form-control" name="userId"
+                                   title="" required="" readonly="readonly"/>
+                        </div>
+                        <div>
+                            <label>商品ID</label>
+                            <input type="text" value="" id='goodsIdUpdate' class="form-control" name="goodsId"
+                                   title="" required="" />
+                        </div>
+                        <div>
+                            <label>商品状态</label>
+                            <input type="text" value="" id='statusUpdate' class="form-control" name="status"
+                                   title="" required="" readonly="readonly"/>
+                        </div>
+                        <div>
+                            <label>购买数量</label>
+                            <input type="text" value="" id='numberUpdate' class="form-control" name="number"
+                                   title="" required=""/>
+                        </div>
+                    </div>
+                    <!-- modal-body -->
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default closeBtn"
+                                data-dismiss="modal">取消
+                        </button>
+                        <button type="submit" id="submit_update" class="btn btn-primary">修改</button>
+                    </div> <!-- modal-footer -->
+                </div> <!-- /.modal-content -->
+            </form>
+        </div> <!-- /.modal-dialog -->
+    </div>
+    <!--.modal-->
+
+
+    <!-- 删除模态框，单击修改按钮，弹出表单 -->
+    <div class="modal fade" id="deleteShoppingCart" tabindex="-1" role="dialog" data-toggle="modal"
+         aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+
+        <div class="modal-dialog" style="width: 400px">
+            <form class="addAdminform" th:action="@{/shopping-cart/deleteShoppingCart}" method="post" id="deleteCheck">
+                <div class="modal-content">
+                    <div class="modal-header"
+                         style="background-color: #00a0f0; color: white;">
+                        <button type="button" class="close" data-dismiss="modal"
+                                aria-hidden="true">&times;
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel3">删除用户购物车信息</h4>
+                    </div>
+                    <!-- .modal-header -->
+                    <div class="modal-body addModal">
+                        <input type="hidden" name="cartId" value="" id="deleteCartId"/>
+                    </div>
+                    <!-- modal-body -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default closeBtn"
+                                data-dismiss="modal">取消
+                        </button>
+                        <button type="submit" id="submit_delete" class="btn btn-primary">删除</button>
+                    </div> <!-- modal-footer -->
+                </div> <!-- /.modal-content -->
+            </form>
+        </div> <!-- /.modal-dialog -->
+    </div>
+    <!--.modal-->
+
+    <script>
+        $(".shoppingCartEdit1").click(function (){
+            var cartId = $(this).parent().parent().children().eq(1).text();
+            var userId = $(this).parent().parent().children().eq(2).text();
+            var goodsId = $(this).parent().parent().children().eq(3).text();
+            var status = $(this).parent().parent().children().eq(4).text();
+            var number = $(this).parent().parent().children().eq(5).text();
+            $("#cartIdUpdate").val(cartId);
+            $("#userIdUpdate").val(userId);
+            $("#goodsIdUpdate").val(goodsId);
+            $("#statusUpdate").val(status);
+            $("#numberUpdate").val(number);
+        })
+
+        $(".shoppingCartEdit2").click(function () {
+            var cartId = $(this).parent().parent().children().eq(1).text();
+            $("#deleteCartId").val(cartId);
+
+        })
+    </script>
+
+    <script th:inline="javascript">
+        var msg = [[${msg}]];
+        $(document).ready(function () {
+            if(msg!=null){
+                swal({
+                    title : "温馨提示",
+                    text : msg
+                });
+            }
+        });
+    </script>
 </body>
 </html>

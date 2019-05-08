@@ -10,6 +10,8 @@
 
     <link th:href="@{/css/plugins/iCheck/custom.css}" rel="stylesheet"/>
     <link th:href="@{/css/plugins/footable/footable.core.css}" rel="stylesheet"/>
+    <!-- Sweet Alert -->
+    <link th:href="@{/css/plugins/sweetalert/sweetalert.css}" rel="stylesheet"/>
 
     <!-- Mainly scripts -->
     <script th:src="@{/js/jquery-2.1.1.js}"></script>
@@ -35,6 +37,8 @@
 
     <!-- common -->
     <script th:src="@{/js/common.js}"></script>
+    <!-- Sweet alert -->
+    <script th:src="@{/js/plugins/sweetalert/sweetalert.min.js}"></script>
 
 
 </head>
@@ -75,7 +79,7 @@
                                 </div>
                             </div>
                             <div class="ibox-content" style="display: block;">
-                                <form action="/admin/findAdmin">
+                                <form action="/user-detail/findUserDetail">
                                     <div class="row">
                                         <div class="col-sm-2 m-b-xs">
                                             <input id="userId" name="userId" placeholder="按用户id查找" class="form-control" type="text" />
@@ -145,20 +149,12 @@
                                             <td th:text="${userDetail.registIp}"></td>
                                             <td th:text="${userDetail.registTime}"></td>
                                             <td>
-                                                <a data-toggle="modal" data-target="#updateUserDetail" title="修改" onclick="updade(adminRoleInf)"><i class="fa fa-edit text-navy"></i></a>
+                                                <a data-toggle="modal" data-target="#updateUserDetail" title="修改" class="userDetailEdit1" ><i class="fa fa-edit text-navy"></i></a>
                                                 &nbsp;&nbsp;&nbsp;&nbsp;
-                                                <a data-toggle="modal" data-target="#deleteUserDetail"  title="删除" ><i class="fa fa-trash-o text-navy"></i></a>
+                                                <a data-toggle="modal" data-target="#deleteUserDetail" title="删除" class="userDetailEdit2" ><i class="fa fa-trash-o text-navy"></i></a>
                                             </td>
                                         </tr>
                                         </tbody>
-                                        <!--分页-->
-                                        <tfoot>
-                                        <tr>
-                                            <td colspan="7">
-                                                <ul id="pageHTML" class="pagination pull-right"></ul>
-                                            </td>
-                                        </tr>
-                                        </tfoot>
                                     </table>
                                 </div>
                             </div>
@@ -169,5 +165,178 @@
             <div class="footer" th:include="/commons/footer :: footer"></div>
         </div>
     </div>
+    <!-- 增加模态框，单击增加按钮，弹出表单 -->
+    <div class="modal fade" id="addUserDetail" tabindex="-1" role="dialog" data-toggle="modal"
+         aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+
+        <div class="modal-dialog" style="width: 400px">
+            <form class="addAdminform" th:action="@{/user-detail/addUserDetail}" method="post" id="AddCheck">
+                <div class="modal-content">
+                    <div class="modal-header"
+                         style="background-color: #00a0f0; color: white;">
+                        <button type="button" class="close" data-dismiss="modal"
+                                aria-hidden="true">&times;
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel1">新增用户详情</h4>
+                    </div>
+                    <!-- .modal-header -->
+                    <div class="modal-body addModal">
+                        <div>
+                            <label>用户ID</label>
+                            <input type="text" value="" id='userIdAdd' class="form-control" name="userId"
+                                   title="" required=""/>
+                        </div>
+                        <div>
+                            <label>昵称</label>
+                            <input type="text" value="" id='nicknameAdd' class="form-control" name="nickname"
+                                   title="" required="" />
+                        </div>
+                        <div>
+                            <label>真实姓名</label>
+                            <input type="text" value="" id='realnameAdd' class="form-control" name="realname"
+                                   title="" required=""/>
+                        </div>
+                        <div>
+                            <label>性别</label>
+                            <input type="text" value="" id='sexAdd' class="form-control" name="sex"
+                                   title="" required=""/>
+                        </div>
+                        <div>
+                            <label>出生日期</label>
+                            <input type="date" value="" id='birthdayAdd' class="form-control" name="birthday"
+                                   title="" required=""/>
+                        </div>
+                    </div>
+                    <!-- modal-body -->
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default closeBtn"
+                                data-dismiss="modal">取消
+                        </button>
+                        <button type="submit" id="submit_add" class="btn btn-primary">添加</button>
+                    </div> <!-- modal-footer -->
+                </div> <!-- /.modal-content -->
+
+            </form>
+        </div> <!-- /.modal-dialog -->
+    </div>
+    <!--.modal-->
+
+    <!-- 修改模态框，单击修改按钮，弹出表单 -->
+    <div class="modal fade" id="updateUserDetail" tabindex="-1" role="dialog" data-toggle="modal"
+         aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+
+        <div class="modal-dialog" style="width: 400px">
+            <form class="addAdminform" th:action="@{/user-detail/updateUserDetail}" method="post" id="updateCheck">
+                <div class="modal-content">
+                    <div class="modal-header"
+                         style="background-color: #00a0f0; color: white;">
+                        <button type="button" class="close" data-dismiss="modal"
+                                aria-hidden="true">&times;
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel2">修改用户详情</h4>
+                    </div>
+                    <!-- .modal-header -->
+                    <div class="modal-body addModal">
+                        <input type="hidden" name="detailId" value="" id="detailIdUpdate"/>
+                        <!--<input type="hidden" name="status" value="1" id="status"/>-->
+                        <div>
+                            <label>昵称</label>
+                            <input type="text" value="" id='nicknameUpdate' class="form-control" name="nickname"
+                                   title="" required=""/>
+                        </div>
+                        <div>
+                            <label>真实姓名</label>
+                            <input type="text" value="" id='realnameUpdate' class="form-control" name="realname"
+                                   title="" required=""/>
+                        </div>
+                        <div>
+                            <label>性别</label>
+                            <input type="text" value="" id='sexUpdate' class="form-control" name="sex"
+                                   title="" required=""/>
+                        </div>
+                        <div>
+                            <label>出生日期</label>
+                            <input type="date" value="" id='birthdayUpdate' class="form-control" name="birthday"
+                                   title="" required=""/>
+                        </div>
+                    </div>
+                    <!-- modal-body -->
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default closeBtn"
+                                data-dismiss="modal">取消
+                        </button>
+                        <button type="submit" id="submit_update" class="btn btn-primary">修改</button>
+                    </div> <!-- modal-footer -->
+                </div> <!-- /.modal-content -->
+            </form>
+        </div> <!-- /.modal-dialog -->
+    </div>
+    <!--.modal-->
+
+    <!-- 删除模态框，单击修改按钮，弹出表单 -->
+    <div class="modal fade" id="deleteUserDetail" tabindex="-1" role="dialog" data-toggle="modal"
+         aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+
+        <div class="modal-dialog" style="width: 400px">
+            <form class="addAdminform" th:action="@{/user-detail/deleteUserDetail}" method="post" id="deleteCheck">
+                <div class="modal-content">
+                    <div class="modal-header"
+                         style="background-color: #00a0f0; color: white;">
+                        <button type="button" class="close" data-dismiss="modal"
+                                aria-hidden="true">&times;
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel3">删除用户详情</h4>
+                    </div>
+                    <!-- .modal-header -->
+                    <div class="modal-body addModal">
+                        <input type="hidden" name="detailId" value="" id="deleteDetailId"/>
+                    </div>
+                    <!-- modal-body -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default closeBtn"
+                                data-dismiss="modal">取消
+                        </button>
+                        <button type="submit" id="submit_delete" class="btn btn-primary">删除</button>
+                    </div> <!-- modal-footer -->
+                </div> <!-- /.modal-content -->
+            </form>
+        </div> <!-- /.modal-dialog -->
+    </div>
+    <!--.modal-->
+
+    <script>
+        $(".userDetailEdit1").click(function (){
+            var detailId = $(this).parent().parent().children().eq(1).text();
+            var nickname = $(this).parent().parent().children().eq(3).text();
+            var realname = $(this).parent().parent().children().eq(4).text();
+            var sex = $(this).parent().parent().children().eq(5).text();
+            var birthday = $(this).parent().parent().children().eq(9).text();
+            $("#detailIdUpdate").val(detailId);
+            $("#nicknameUpdate").val(nickname);
+            $("#realnameUpdate").val(realname);
+            $("#sexUpdate").val(sex);
+            $("#birthdayUpdate").val(birthday);
+        })
+
+        $(".userDetailEdit2").click(function () {
+            var detailId = $(this).parent().parent().children().eq(1).text();
+            $("#deleteDetailId").val(detailId);
+        })
+    </script>
+
+    <script th:inline="javascript">
+        var msg = [[${msg}]];
+        $(document).ready(function () {
+            if(msg!=null){
+                swal({
+                    title : "温馨提示",
+                    text : msg
+                });
+            }
+        });
+    </script>
+
 </body>
 </html>

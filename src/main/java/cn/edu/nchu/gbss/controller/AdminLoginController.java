@@ -30,7 +30,18 @@ public class AdminLoginController {
      * @param:
      * @return:
      */
-    @RequestMapping("/login")
+    @GetMapping("/login")
+    public String loginGet(Model model){
+        return "admin/login";
+    }
+
+
+    /**
+     * @description: 管理员登录
+     * @param:
+     * @return:
+     */
+    @PostMapping ("/login")
     public String loginPost(Admin admin, Model model, HttpSession httpSession) {
         System.out.println(admin.toString());
         Wrapper<Admin> wrapper=new EntityWrapper<>();
@@ -74,7 +85,7 @@ public class AdminLoginController {
         System.out.println(admin.toString());
         admin.setStatus("1");
         if(adminService.insert(admin)) {
-            return "redirect:admin/login";
+            return "redirect:login";
         }else {
             model.addAttribute("msg","账号注册失败");
             return "admin/register";

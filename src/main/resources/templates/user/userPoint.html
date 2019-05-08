@@ -10,6 +10,8 @@
 
     <link th:href="@{/css/plugins/iCheck/custom.css}" rel="stylesheet"/>
     <link th:href="@{/css/plugins/footable/footable.core.css}" rel="stylesheet"/>
+    <!-- Sweet Alert -->
+    <link th:href="@{/css/plugins/sweetalert/sweetalert.css}" rel="stylesheet"/>
 
     <!-- Mainly scripts -->
     <script th:src="@{/js/jquery-2.1.1.js}"></script>
@@ -35,6 +37,8 @@
 
     <!-- common -->
     <script th:src="@{/js/common.js}"></script>
+    <!-- Sweet alert -->
+    <script th:src="@{/js/plugins/sweetalert/sweetalert.min.js}"></script>
 
 
 </head>
@@ -75,7 +79,7 @@
                                 </div>
                             </div>
                             <div class="ibox-content" style="display: block;">
-                                <form action="/admin/findAdmin">
+                                <form action="/user-point/findUserPoint">
                                     <div class="row">
                                         <div class="col-sm-2 m-b-xs">
                                             <input id="userId" name="userId" placeholder="按用户id查找" class="form-control" type="text" />
@@ -128,11 +132,11 @@
                                             <td th:text="${userPoint.userId}"></td>
                                             <td th:text="${userPoint.userPoint}"></td>
                                             <td th:text="${userPoint.pointConsumed}"></td>
-                                            <td th:text="${userPoint.porintFrozen}"></td>
+                                            <td th:text="${userPoint.pointFrozen}"></td>
                                             <td>
-                                                <a data-toggle="modal" data-target="#updateUserPoint" title="修改" onclick="updade(adminRoleInf)"><i class="fa fa-edit text-navy"></i></a>
+                                                <a data-toggle="modal" data-target="#updateUserPoint" title="修改" class="userPointEdit1" ><i class="fa fa-edit text-navy"></i></a>
                                                 &nbsp;&nbsp;&nbsp;&nbsp;
-                                                <a data-toggle="modal" data-target="#deleteUserPoint"  title="删除" ><i class="fa fa-trash-o text-navy"></i></a>
+                                                <a data-toggle="modal" data-target="#deleteUserPoint" title="删除" class="userPointEdit2"><i class="fa fa-trash-o text-navy"></i></a>
                                             </td>
                                         </tr>
                                         </tbody>
@@ -146,5 +150,167 @@
             <div class="footer" th:include="/commons/footer :: footer"></div>
         </div>
     </div>
+
+    <!-- 增加模态框，单击增加按钮，弹出表单 -->
+    <div class="modal fade" id="addUserPoint" tabindex="-1" role="dialog" data-toggle="modal"
+         aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+
+        <div class="modal-dialog" style="width: 400px">
+            <form class="addAdminform" th:action="@{/user-point/addUserPoint}" method="post" id="AddCheck">
+                <div class="modal-content">
+                    <div class="modal-header"
+                         style="background-color: #00a0f0; color: white;">
+                        <button type="button" class="close" data-dismiss="modal"
+                                aria-hidden="true">&times;
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel1">添加用户积分</h4>
+                    </div>
+                    <!-- .modal-header -->
+                    <div class="modal-body addModal">
+                        <div>
+                            <label>用户ID</label>
+                            <input type="text" value="" id='userIdAdd' class="form-control" name="userId"
+                                   title="" required=""/>
+                        </div>
+                        <div>
+                            <label>用户积分</label>
+                            <input type="text" value="" id='userPointAdd' class="form-control" name="userPoint"
+                                   title="" required="" />
+                        </div>
+                        <div>
+                            <label>已消费积分</label>
+                            <input type="text" value="" id='pointConsumedAdd' class="form-control" name="pointConsumed"
+                                   title="" required=""/>
+                        </div>
+                        <div>
+                            <label>已冻结积分</label>
+                            <input type="text" value="" id='pointFrozenAdd' class="form-control" name="pointFrozen"
+                                   title="" required=""/>
+                        </div>
+                    </div>
+                    <!-- modal-body -->
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default closeBtn"
+                                data-dismiss="modal">取消
+                        </button>
+                        <button type="submit" id="submit_add" class="btn btn-primary">添加</button>
+                    </div> <!-- modal-footer -->
+                </div> <!-- /.modal-content -->
+            </form>
+        </div> <!-- /.modal-dialog -->
+    </div>
+    <!--.modal-->
+
+    <!-- 修改模态框，单击修改按钮，弹出表单 -->
+    <div class="modal fade" id="updateUserPoint" tabindex="-1" role="dialog" data-toggle="modal"
+         aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+
+        <div class="modal-dialog" style="width: 400px">
+            <form class="addAdminform" th:action="@{/user-point/updateUserPoint}" method="post" id="updateCheck">
+                <div class="modal-content">
+                    <div class="modal-header"
+                         style="background-color: #00a0f0; color: white;">
+                        <button type="button" class="close" data-dismiss="modal"
+                                aria-hidden="true">&times;
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel2">修改用户积分</h4>
+                    </div>
+                    <!-- .modal-header -->
+                    <div class="modal-body addModal">
+                        <input type="hidden" name="pointId" value="" id="pointIdUpdate"/>
+                        <!--<input type="hidden" name="status" value="1" id="status"/>-->
+                        <div>
+                            <label>用户积分</label>
+                            <input type="text" value="" id='userPointUpdate' class="form-control" name="userPoint"
+                                   title="" required="" />
+                        </div>
+                        <div>
+                            <label>已消费积分</label>
+                            <input type="text" value="" id='pointConsumedUpdate' class="form-control" name="pointConsumed"
+                                   title="" required=""/>
+                        </div>
+                        <div>
+                            <label>已冻结积分</label>
+                            <input type="text" value="" id='pointFrozenUpdate' class="form-control" name="pointFrozen"
+                                   title="" required=""/>
+                        </div>
+                    </div>
+                    <!-- modal-body -->
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default closeBtn"
+                                data-dismiss="modal">取消
+                        </button>
+                        <button type="submit" id="submit_update" class="btn btn-primary">修改</button>
+                    </div> <!-- modal-footer -->
+                </div> <!-- /.modal-content -->
+            </form>
+        </div> <!-- /.modal-dialog -->
+    </div>
+    <!--.modal-->
+
+
+    <!-- 删除模态框，单击修改按钮，弹出表单 -->
+    <div class="modal fade" id="deleteUserPoint" tabindex="-1" role="dialog" data-toggle="modal"
+         aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+
+        <div class="modal-dialog" style="width: 400px">
+            <form class="addAdminform" th:action="@{/user-point/deleteUserPoint}" method="post" id="deleteCheck">
+                <div class="modal-content">
+                    <div class="modal-header"
+                         style="background-color: #00a0f0; color: white;">
+                        <button type="button" class="close" data-dismiss="modal"
+                                aria-hidden="true">&times;
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel3">删除用户积分</h4>
+                    </div>
+                    <!-- .modal-header -->
+                    <div class="modal-body addModal">
+                        <input type="hidden" name="pointId" value="" id="deletePointId"/>
+                    </div>
+                    <!-- modal-body -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default closeBtn"
+                                data-dismiss="modal">取消
+                        </button>
+                        <button type="submit" id="submit_delete" class="btn btn-primary">删除</button>
+                    </div> <!-- modal-footer -->
+                </div> <!-- /.modal-content -->
+            </form>
+        </div> <!-- /.modal-dialog -->
+    </div>
+    <!--.modal-->
+
+    <script>
+        $(".userPointEdit1").click(function (){
+            var pointId = $(this).parent().parent().children().eq(1).text();
+            var userPoint = $(this).parent().parent().children().eq(3).text();
+            var pointConsumed = $(this).parent().parent().children().eq(4).text();
+            var pointFrozen = $(this).parent().parent().children().eq(5).text();
+            $("#pointIdUpdate").val(pointId);
+            $("#userPointUpdate").val(userPoint);
+            $("#pointConsumedUpdate").val(pointConsumed);
+            $("#pointFrozenUpdate").val(pointFrozen);
+        })
+
+        $(".userPointEdit2").click(function () {
+            var pointId = $(this).parent().parent().children().eq(1).text();
+            $("#deletePointId").val(pointId);
+
+        })
+    </script>
+
+    <script th:inline="javascript">
+        var msg = [[${msg}]];
+        $(document).ready(function () {
+            if(msg!=null){
+                swal({
+                    title : "温馨提示",
+                    text : msg
+                });
+            }
+        });
+    </script>
 </body>
 </html>

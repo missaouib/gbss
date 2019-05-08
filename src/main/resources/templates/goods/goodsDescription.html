@@ -10,6 +10,8 @@
 
     <link th:href="@{/css/plugins/iCheck/custom.css}" rel="stylesheet"/>
     <link th:href="@{/css/plugins/footable/footable.core.css}" rel="stylesheet"/>
+    <!-- Sweet Alert -->
+    <link th:href="@{/css/plugins/sweetalert/sweetalert.css}" rel="stylesheet"/>
 
     <!-- Mainly scripts -->
     <script th:src="@{/js/jquery-2.1.1.js}"></script>
@@ -35,6 +37,8 @@
 
     <!-- common -->
     <script th:src="@{/js/common.js}"></script>
+    <!-- Sweet alert -->
+    <script th:src="@{/js/plugins/sweetalert/sweetalert.min.js}"></script>
 
 
 </head>
@@ -75,7 +79,7 @@
                                 </div>
                             </div>
                             <div class="ibox-content" style="display: block;">
-                                <form action="/admin/findAdmin">
+                                <form action="/goods-description/findGoodsDescription">
                                     <div class="row">
                                         <div class="col-sm-2 m-b-xs">
                                             <input id="goodsId" name="goodsId" placeholder="按商品ID查找" class="form-control" type="text" />
@@ -130,9 +134,9 @@
                                             <td th:text="${goodsDescription.code}"></td>
                                             <td th:text="${goodsDescription.content}"></td>
                                             <td>
-                                                <a data-toggle="modal" data-target="#updateGoodsDescription" title="修改" onclick="updade(adminRoleInf)"><i class="fa fa-edit text-navy"></i></a>
+                                                <a data-toggle="modal" data-target="#updateGoodsDescription" title="修改" class="goodsDescriptionEdit1"><i class="fa fa-edit text-navy"></i></a>
                                                 &nbsp;&nbsp;&nbsp;&nbsp;
-                                                <a data-toggle="modal" data-target="#deleteGoodsDescription"  title="删除" ><i class="fa fa-trash-o text-navy"></i></a>
+                                                <a data-toggle="modal" data-target="#deleteGoodsDescription" title="删除" class="goodsDescriptionEdit2"><i class="fa fa-trash-o text-navy"></i></a>
                                             </td>
                                         </tr>
                                         </tbody>
@@ -146,5 +150,174 @@
             <div class="footer" th:include="/commons/footer :: footer"></div>
         </div>
     </div>
+
+    <!-- 增加模态框，单击增加按钮，弹出表单 -->
+    <div class="modal fade" id="addGoodsDescription" tabindex="-1" role="dialog" data-toggle="modal"
+         aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+
+        <div class="modal-dialog" style="width: 400px">
+            <form class="addAdminform" th:action="@{/goods-description/addGoodsDescription}" method="post" id="AddCheck">
+                <div class="modal-content">
+                    <div class="modal-header"
+                         style="background-color: #00a0f0; color: white;">
+                        <button type="button" class="close" data-dismiss="modal"
+                                aria-hidden="true">&times;
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel1">添加商品描述</h4>
+                    </div>
+                    <!-- .modal-header -->
+                    <div class="modal-body addModal">
+                        <div>
+                            <label>商品ID</label>
+                            <input type="text" value="" id='goodsIdAdd' class="form-control" name="goodsId"
+                                   title="" required=""/>
+                        </div>
+                        <div>
+                            <label>标题</label>
+                            <input type="text" value="" id='titleAdd' class="form-control" name="title"
+                                   title="" required="" />
+                        </div>
+                        <div>
+                            <label>代码</label>
+                            <input type="text" value="" id='codeAdd' class="form-control" name="code"
+                                   title="" required=""/>
+                        </div>
+                        <div>
+                            <label>内容</label>
+                            <input type="text" value="" id='contentAdd' class="form-control" name="content"
+                                   title="" required=""/>
+                        </div>
+                    </div>
+                    <!-- modal-body -->
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default closeBtn"
+                                data-dismiss="modal">取消
+                        </button>
+                        <button type="submit" id="submit_add" class="btn btn-primary">添加</button>
+                    </div> <!-- modal-footer -->
+                </div> <!-- /.modal-content -->
+            </form>
+        </div> <!-- /.modal-dialog -->
+    </div>
+    <!--.modal-->
+
+    <!-- 修改模态框，单击修改按钮，弹出表单 -->
+    <div class="modal fade" id="updateGoodsDescription" tabindex="-1" role="dialog" data-toggle="modal"
+         aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+
+        <div class="modal-dialog" style="width: 400px">
+            <form class="addAdminform" th:action="@{/goods-description/updateGoodsDescription}" method="post" id="updateCheck">
+                <div class="modal-content">
+                    <div class="modal-header"
+                         style="background-color: #00a0f0; color: white;">
+                        <button type="button" class="close" data-dismiss="modal"
+                                aria-hidden="true">&times;
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel2">修改商品描述</h4>
+                    </div>
+                    <!-- .modal-header -->
+                    <div class="modal-body addModal">
+                        <input type="hidden" name="descriptionId" value="" id="descriptionIdUpdate"/>
+                        <!--<input type="hidden" name="status" value="1" id="status"/>-->
+                        <div>
+                            <label>商品ID</label>
+                            <input type="text" value="" id='goodsIdUpdate' class="form-control" name="goodsId"
+                                   title="" required="" readonly="readonly"/>
+                        </div>
+                        <div>
+                            <label>标题</label>
+                            <input type="text" value="" id='titleUpdate' class="form-control" name="title"
+                                   title="" required="" />
+                        </div>
+                        <div>
+                            <label>代码</label>
+                            <input type="text" value="" id='codeUpdate' class="form-control" name="code"
+                                   title="" required=""/>
+                        </div>
+                        <div>
+                            <label>内容</label>
+                            <input type="text" value="" id='contentUpdate' class="form-control" name="content"
+                                   title="" required=""/>
+                        </div>
+                    </div>
+                    <!-- modal-body -->
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default closeBtn"
+                                data-dismiss="modal">取消
+                        </button>
+                        <button type="submit" id="submit_update" class="btn btn-primary">修改</button>
+                    </div> <!-- modal-footer -->
+                </div> <!-- /.modal-content -->
+            </form>
+        </div> <!-- /.modal-dialog -->
+    </div>
+    <!--.modal-->
+
+
+    <!-- 删除模态框，单击修改按钮，弹出表单 -->
+    <div class="modal fade" id="deleteGoodsDescription" tabindex="-1" role="dialog" data-toggle="modal"
+         aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+
+        <div class="modal-dialog" style="width: 400px">
+            <form class="addAdminform" th:action="@{/goods-description/deleteGoodsDescription}" method="post" id="deleteCheck">
+                <div class="modal-content">
+                    <div class="modal-header"
+                         style="background-color: #00a0f0; color: white;">
+                        <button type="button" class="close" data-dismiss="modal"
+                                aria-hidden="true">&times;
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel3">删除商品描述</h4>
+                    </div>
+                    <!-- .modal-header -->
+                    <div class="modal-body addModal">
+                        <input type="hidden" name="descriptionId" value="" id="deleteDescriptionId"/>
+                    </div>
+                    <!-- modal-body -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default closeBtn"
+                                data-dismiss="modal">取消
+                        </button>
+                        <button type="submit" id="submit_delete" class="btn btn-primary">删除</button>
+                    </div> <!-- modal-footer -->
+                </div> <!-- /.modal-content -->
+            </form>
+        </div> <!-- /.modal-dialog -->
+    </div>
+    <!--.modal-->
+
+    <script>
+        $(".goodsDescriptionEdit1").click(function (){
+            var descriptionId = $(this).parent().parent().children().eq(1).text();
+            var goodsId = $(this).parent().parent().children().eq(2).text();
+            var title = $(this).parent().parent().children().eq(3).text();
+            var code = $(this).parent().parent().children().eq(4).text();
+            var content = $(this).parent().parent().children().eq(5).text();
+            $("#descriptionIdUpdate").val(descriptionId);
+            $("#goodsIdUpdate").val(goodsId);
+            $("#titleUpdate").val(title);
+            $("#codeUpdate").val(code);
+            $("#contentUpdate").val(content);
+        })
+
+        $(".goodsDescriptionEdit2").click(function () {
+            var pointId = $(this).parent().parent().children().eq(1).text();
+            $("#deleteDescriptionId").val(pointId);
+
+        })
+    </script>
+
+    <script th:inline="javascript">
+        var msg = [[${msg}]];
+        $(document).ready(function () {
+            if(msg!=null){
+                swal({
+                    title : "温馨提示",
+                    text : msg
+                });
+            }
+        });
+    </script>
 </body>
 </html>

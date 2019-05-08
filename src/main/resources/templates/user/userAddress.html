@@ -10,6 +10,8 @@
 
     <link th:href="@{/css/plugins/iCheck/custom.css}" rel="stylesheet"/>
     <link th:href="@{/css/plugins/footable/footable.core.css}" rel="stylesheet"/>
+    <!-- Sweet Alert -->
+    <link th:href="@{/css/plugins/sweetalert/sweetalert.css}" rel="stylesheet"/>
 
     <!-- Mainly scripts -->
     <script th:src="@{/js/jquery-2.1.1.js}"></script>
@@ -35,6 +37,8 @@
 
     <!-- common -->
     <script th:src="@{/js/common.js}"></script>
+    <!-- Sweet alert -->
+    <script th:src="@{/js/plugins/sweetalert/sweetalert.min.js}"></script>
 
 
 </head>
@@ -75,7 +79,7 @@
                                 </div>
                             </div>
                             <div class="ibox-content" style="display: block;">
-                                <form action="/admin/findAdmin">
+                                <form action="/user-address/findUserAddress">
                                     <div class="row">
                                         <div class="col-sm-2 m-b-xs">
                                             <input id="userId" name="userId" placeholder="按用户id查找" class="form-control" type="text" />
@@ -147,9 +151,9 @@
                                             <td th:text="${userAddress.isDefaultAddress}"></td>
                                             <td th:text="${userAddress.creatTime}"></td>
                                             <td>
-                                                <a data-toggle="modal" data-target="#updateUserDetail" title="修改" onclick="updade(adminRoleInf)"><i class="fa fa-edit text-navy"></i></a>
+                                                <a data-toggle="modal" data-target="#updateUserAddress" title="修改" class="userAddressEdit1"><i class="fa fa-edit text-navy"></i></a>
                                                 &nbsp;&nbsp;&nbsp;&nbsp;
-                                                <a data-toggle="modal" data-target="#deleteUserDetail"  title="删除" ><i class="fa fa-trash-o text-navy"></i></a>
+                                                <a data-toggle="modal" data-target="#deleteUserAddress" title="删除" class="userAddressEdit2"><i class="fa fa-trash-o text-navy"></i></a>
                                             </td>
                                         </tr>
                                         </tbody>
@@ -163,5 +167,222 @@
             <div class="footer" th:include="/commons/footer :: footer"></div>
         </div>
     </div>
+
+    <!-- 增加模态框，单击增加按钮，弹出表单 -->
+    <div class="modal fade" id="addUserAddress" tabindex="-1" role="dialog" data-toggle="modal"
+         aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+
+        <div class="modal-dialog" style="width: 400px">
+            <form class="addAdminform" th:action="@{/user-address/addUserAddress}" method="post" id="AddCheck">
+                <div class="modal-content">
+                    <div class="modal-header"
+                         style="background-color: #00a0f0; color: white;">
+                        <button type="button" class="close" data-dismiss="modal"
+                                aria-hidden="true">&times;
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel1">添加用户积分</h4>
+                    </div>
+                    <!-- .modal-header -->
+                    <div class="modal-body addModal">
+                        <div>
+                            <label>用户ID</label>
+                            <input type="text" value="" id='userIdAdd' class="form-control" name="userId"
+                                   title="" required=""/>
+                            <label>收件人</label>
+                            <input type="text" value="" id='receiverAdd' class="form-control" name="receiver"
+                                   title="" required="" />
+                            <label>电话</label>
+                            <input type="tel" value="" id='telephoneAdd' class="form-control" name="telephone"
+                                   title="" required=""/>
+                        </div>
+                        <div>
+                            <label>国家</label>
+                            <input type="text" value="" id='countryAdd' class="form-control" name="country"
+                                   title="" required=""/>
+                            <label>省份</label>
+                            <input type="text" value="" id='provinceAdd' class="form-control" name="province"
+                                   title="" required="" />
+                            <label>城市</label>
+                            <input type="text" value="" id='cityAdd' class="form-control" name="city"
+                                   title="" required=""/>
+                        </div>
+                        <div>
+                            <label>区</label>
+                            <input type="text" value="" id='areaAdd' class="form-control" name="area"
+                                   title="" required=""/>
+                            <label>街道信息</label>
+                            <input type="text" value="" id='streetAdd' class="form-control" name="street"
+                                   title="" required="" />
+                            <label>邮编</label>
+                            <input type="text" value="" id='zipcodeAdd' class="form-control" name="zipcode"
+                                   title="" required=""/>
+                        </div>
+                        <div>
+                            <label>是否为默认地址</label>
+                            <input type="text" value="" id='isDefaultAddressAdd' class="form-control" name="isDefaultAddress"
+                                   title="" required=""/>
+                        </div>
+                    </div>
+                    <!-- modal-body -->
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default closeBtn"
+                                data-dismiss="modal">取消
+                        </button>
+                        <button type="submit" id="submit_add" class="btn btn-primary">添加</button>
+                    </div> <!-- modal-footer -->
+                </div> <!-- /.modal-content -->
+            </form>
+        </div> <!-- /.modal-dialog -->
+    </div>
+    <!--.modal-->
+
+    <!-- 修改模态框，单击修改按钮，弹出表单 -->
+    <div class="modal fade" id="updateUserAddress" tabindex="-1" role="dialog" data-toggle="modal"
+         aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+
+        <div class="modal-dialog" style="width: 400px">
+            <form class="addAdminform" th:action="@{/user-address/updateUserAddress}" method="post" id="updateCheck">
+                <div class="modal-content">
+                    <div class="modal-header"
+                         style="background-color: #00a0f0; color: white;">
+                        <button type="button" class="close" data-dismiss="modal"
+                                aria-hidden="true">&times;
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel2">修改用户积分</h4>
+                    </div>
+                    <!-- .modal-header -->
+                    <div class="modal-body addModal">
+                        <input type="hidden" name="addressId" value="" id="addressIdUpdate"/>
+                        <!--<input type="hidden" name="status" value="1" id="status"/>-->
+                        <div>
+                            <label>用户ID</label>
+                            <input type="text" value="" id='userIdUpdate' class="form-control" name="userId"
+                                   title="" required="" readonly="readonly"/>
+                            <label>收件人</label>
+                            <input type="text" value="" id='receiverUpdate' class="form-control" name="receiver"
+                                   title="" required="" />
+                            <label>电话</label>
+                            <input type="tel" value="" id='telephoneUpdate' class="form-control" name="telephone"
+                                   title="" required=""/>
+                        </div>
+                        <div>
+                            <label>国家</label>
+                            <input type="text" value="" id='countryUpdate' class="form-control" name="country"
+                                   title="" required=""/>
+                            <label>省份</label>
+                            <input type="text" value="" id='provinceUpdate' class="form-control" name="province"
+                                   title="" required="" />
+                            <label>城市</label>
+                            <input type="text" value="" id='cityUpdate' class="form-control" name="city"
+                                   title="" required=""/>
+                        </div>
+                        <div>
+                            <label>区</label>
+                            <input type="text" value="" id='areaUpdate' class="form-control" name="area"
+                                   title="" required=""/>
+                            <label>街道信息</label>
+                            <input type="text" value="" id='streetUpdate' class="form-control" name="street"
+                                   title="" required="" />
+                            <label>邮编</label>
+                            <input type="text" value="" id='zipcodeUpdate' class="form-control" name="zipcode"
+                                   title="" required=""/>
+                        </div>
+                        <div>
+                            <label>是否为默认地址</label>
+                            <input type="text" value="" id='isDefaultAddressUpdate' class="form-control" name="isDefaultAddress"
+                                   title="" required=""/>
+                        </div>
+                    </div>
+                    <!-- modal-body -->
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default closeBtn"
+                                data-dismiss="modal">取消
+                        </button>
+                        <button type="submit" id="submit_update" class="btn btn-primary">修改</button>
+                    </div> <!-- modal-footer -->
+                </div> <!-- /.modal-content -->
+            </form>
+        </div> <!-- /.modal-dialog -->
+    </div>
+    <!--.modal-->
+
+
+    <!-- 删除模态框，单击修改按钮，弹出表单 -->
+    <div class="modal fade" id="deleteUserAddress" tabindex="-1" role="dialog" data-toggle="modal"
+         aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+
+        <div class="modal-dialog" style="width: 400px">
+            <form class="addAdminform" th:action="@{/user-address/deleteUserAddress}" method="post" id="deleteCheck">
+                <div class="modal-content">
+                    <div class="modal-header"
+                         style="background-color: #00a0f0; color: white;">
+                        <button type="button" class="close" data-dismiss="modal"
+                                aria-hidden="true">&times;
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel3">删除用户积分</h4>
+                    </div>
+                    <!-- .modal-header -->
+                    <div class="modal-body addModal">
+                        <input type="hidden" name="addressId" value="" id="deleteAddressId"/>
+                    </div>
+                    <!-- modal-body -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default closeBtn"
+                                data-dismiss="modal">取消
+                        </button>
+                        <button type="submit" id="submit_delete" class="btn btn-primary">删除</button>
+                    </div> <!-- modal-footer -->
+                </div> <!-- /.modal-content -->
+            </form>
+        </div> <!-- /.modal-dialog -->
+    </div>
+    <!--.modal-->
+
+    <script>
+        $(".userAddressEdit1").click(function (){
+            var addressId = $(this).parent().parent().children().eq(1).text();
+            var userId = $(this).parent().parent().children().eq(2).text();
+            var receiver = $(this).parent().parent().children().eq(3).text();
+            var telephone = $(this).parent().parent().children().eq(4).text();
+            var country = $(this).parent().parent().children().eq(5).text();
+            var province = $(this).parent().parent().children().eq(6).text();
+            var city = $(this).parent().parent().children().eq(7).text();
+            var area = $(this).parent().parent().children().eq(8).text();
+            var street = $(this).parent().parent().children().eq(9).text();
+            var zipcode = $(this).parent().parent().children().eq(10).text();
+            var isDefaultAddress = $(this).parent().parent().children().eq(11).text();
+            $("#addressIdUpdate").val(addressId);
+            $("#userIdUpdate").val(userId);
+            $("#receiverUpdate").val(receiver);
+            $("#telephoneUpdate").val(telephone);
+            $("#countryUpdate").val(country);
+            $("#provinceUpdate").val(province);
+            $("#cityUpdate").val(city);
+            $("#areaUpdate").val(area);
+            $("#streetUpdate").val(street);
+            $("#zipcodeUpdate").val(zipcode);
+            $("#isDefaultAddressUpdate").val(isDefaultAddress);
+        })
+
+        $(".userAddressEdit2").click(function () {
+            var addressId = $(this).parent().parent().children().eq(1).text();
+            $("#deleteAddressId").val(addressId);
+
+        })
+    </script>
+
+    <script th:inline="javascript">
+        var msg = [[${msg}]];
+        $(document).ready(function () {
+            if(msg!=null){
+                swal({
+                    title : "温馨提示",
+                    text : msg
+                });
+            }
+        });
+    </script>
 </body>
 </html>

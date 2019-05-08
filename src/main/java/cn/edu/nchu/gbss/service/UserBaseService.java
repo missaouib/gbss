@@ -15,11 +15,15 @@ import java.util.List;
  * @since 2019-05-03
  */
 public interface UserBaseService extends IService<UserBase> {
+    boolean isExitUserBase(UserBase userBase);
+
     boolean addUserBase(UserBase userBase);
 
     boolean deleteUserBase(UserBase userBase);
 
     boolean updateUserBase(UserBase userBase);
+
+    UserBase findUserBaseByName(String name);
 
     List<UserBase> selectAllUserBase();
 
