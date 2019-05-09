@@ -61,19 +61,14 @@ public class UserBaseController {
      * @return:
      */
     @RequestMapping("/addUser")
-    public String addUser(UserBase userBase, Model model, HttpServletRequest request){
+    public String addUser(UserBase userBase, String ip,String cname,Model model){
         if (userBaseService.isExitUserBase(userBase)){
             userBaseService.addUserBase(userBase);
             UserBase userBaseByName = userBaseService.findUserBaseByName(userBase.getUserName());
             UserDetail userDetail = new UserDetail();
             userDetail.setUserId(userBaseByName.getUserId());
-            String ip = new String();
-            if (request.getHeader("x-forwarded-for") == null) {
-                ip=request.getRemoteAddr();
-            }else {
-                ip=request.getHeader("x-forwarded-for");
-            }
             userDetail.setRegistIp(ip);
+            userDetail.setRegistCity(cname);
             userDetail.setLevel(1);
             userDetail.setExperience(0);
             if(userDetailService.addUserDetail(userDetail)){

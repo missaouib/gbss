@@ -130,7 +130,7 @@
                                             <td th:text="${adminRoleInf.adminRoleInfId}"></td>
                                             <td th:text="${adminRoleInf.adminId}"></td>
                                             <td th:text="${adminRoleInf.ruleId}"></td>
-                                            <td th:text="${adminRoleInf.creatTime}"></td>
+                                            <td th:text="${#dates.format(adminRoleInf.creatTime,'yyyy-MM-dd HH:mm:ss')}"></td>
                                             <td>
                                                 <a data-toggle="modal" data-target="#updateAdminRoleInf" title="修改" class="adminRoleInfEdit1"><i class="fa fa-edit text-navy"></i></a>
                                                 &nbsp;&nbsp;&nbsp;&nbsp;
@@ -162,7 +162,7 @@
          aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
 
         <div class="modal-dialog" style="width: 400px">
-            <form class="addAdminform" th:action="@{/admin-role/addAdminRoleInf}" method="post" id="AddCheck">
+            <form class="addAdminform" th:action="@{/admin-role-inf/addAdminRoleInf}" method="post" id="AddCheck">
                 <div class="modal-content">
                     <div class="modal-header"
                          style="background-color: #00a0f0; color: white;">
@@ -203,7 +203,7 @@
          aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
 
         <div class="modal-dialog" style="width: 400px">
-            <form class="addAdminform" th:action="@{/admin-role/updateAdminRoleInf}" method="post" id="updateCheck">
+            <form class="addAdminform" th:action="@{/admin-role-inf/updateAdminRoleInf}" method="post" id="updateCheck">
                 <div class="modal-content">
                     <div class="modal-header"
                          style="background-color: #00a0f0; color: white;">
@@ -256,7 +256,7 @@
          aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
 
         <div class="modal-dialog" style="width: 400px">
-            <form class="addAdminform" th:action="@{/admin-role/deleteAdminRoleInf}" method="post" id="deleteCheck">
+            <form class="addAdminform" th:action="@{/admin-role-inf/deleteAdminRoleInf}" method="post" id="deleteCheck">
                 <div class="modal-content">
                     <div class="modal-header"
                          style="background-color: #00a0f0; color: white;">

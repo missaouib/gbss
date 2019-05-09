@@ -39,6 +39,8 @@
     <script th:src="@{/js/common.js}"></script>
     <!-- Sweet alert -->
     <script th:src="@{/js/plugins/sweetalert/sweetalert.min.js}"></script>
+    <!--ip-->
+    <script src="http://pv.sohu.com/cityjson?ie=utf-8"></script>
 
 
 </head>
@@ -147,7 +149,7 @@
                                             <td th:text="${userDetail.faceUrl}"></td>
                                             <td th:text="${userDetail.birthday}"></td>
                                             <td th:text="${userDetail.registIp}"></td>
-                                            <td th:text="${userDetail.registTime}"></td>
+                                            <td th:text="${#dates.format(userDetail.registTime,'yyyy-MM-dd HH:mm:ss')}"></td>
                                             <td>
                                                 <a data-toggle="modal" data-target="#updateUserDetail" title="修改" class="userDetailEdit1" ><i class="fa fa-edit text-navy"></i></a>
                                                 &nbsp;&nbsp;&nbsp;&nbsp;
@@ -181,6 +183,8 @@
                     </div>
                     <!-- .modal-header -->
                     <div class="modal-body addModal">
+                        <input type="hidden" name="ip" value="" id="ip"/>
+                        <input type="hidden" name="cname" value="" id="cname"/>
                         <div>
                             <label>用户ID</label>
                             <input type="text" value="" id='userIdAdd' class="form-control" name="userId"
@@ -324,6 +328,14 @@
             var detailId = $(this).parent().parent().children().eq(1).text();
             $("#deleteDetailId").val(detailId);
         })
+
+        $(".add_btn").click(function () {
+            var ip=returnCitySN['cip'];
+            var cname = returnCitySN["cname"];
+            $("#ip").val(ip);
+            $("#cname").val(cname);
+        })
+
     </script>
 
     <script th:inline="javascript">

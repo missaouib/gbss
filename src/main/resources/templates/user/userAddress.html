@@ -149,7 +149,7 @@
                                             <td th:text="${userAddress.street}"></td>
                                             <td th:text="${userAddress.zipcode}"></td>
                                             <td th:text="${userAddress.isDefaultAddress}"></td>
-                                            <td th:text="${userAddress.creatTime}"></td>
+                                            <td th:text="${#dates.format(userAddress.creatTime,'yyyy-MM-dd HH:mm:ss')}"></td>
                                             <td>
                                                 <a data-toggle="modal" data-target="#updateUserAddress" title="修改" class="userAddressEdit1"><i class="fa fa-edit text-navy"></i></a>
                                                 &nbsp;&nbsp;&nbsp;&nbsp;

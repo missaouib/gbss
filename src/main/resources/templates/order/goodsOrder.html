@@ -43,133 +43,133 @@
 
 </head>
 <body>
-<div id="wrapper">
-    <nav class="navbar-default navbar-static-side" role="navigation" th:include="/commons/nav :: navigation"></nav>
-    <div id="page-wrapper" class="gray-bg">
-        <div class="border-bottom" th:include="/commons/header :: headerTop"></div>
-        <div class="row wrapper border-bottom white-bg page-heading" th:fragment="headerNav">
-            <div class="col-lg-10">
-                <h2>订单信息</h2>
-                <ol class="breadcrumb">
-                    <li>
-                        <a th:href="@{/admin/dashboard}">首页</a>
-                    </li>
-                    <li>
-                        <a>订单模块</a>
-                    </li>
-                    <li class="active">
-                        <strong>订单信息</strong>
-                    </li>
-                </ol>
+    <div id="wrapper">
+        <nav class="navbar-default navbar-static-side" role="navigation" th:include="/commons/nav :: navigation"></nav>
+        <div id="page-wrapper" class="gray-bg">
+            <div class="border-bottom" th:include="/commons/header :: headerTop"></div>
+            <div class="row wrapper border-bottom white-bg page-heading" th:fragment="headerNav">
+                <div class="col-lg-10">
+                    <h2>订单信息</h2>
+                    <ol class="breadcrumb">
+                        <li>
+                            <a th:href="@{/admin/dashboard}">首页</a>
+                        </li>
+                        <li>
+                            <a>订单模块</a>
+                        </li>
+                        <li class="active">
+                            <strong>订单信息</strong>
+                        </li>
+                    </ol>
+                </div>
+                <div class="col-lg-2">
+                </div>
             </div>
-            <div class="col-lg-2">
-            </div>
-        </div>
 
-        <div class="wrapper wrapper-content animated fadeInRight">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="ibox float-e-margins">
-                        <div class="ibox-title">
-                            <h5>搜索&amp;操作</h5>
-                            <div class="ibox-tools">
-                                <a class="collapse-link">
-                                    <i class="fa fa-chevron-up"></i>
-                                </a>
+            <div class="wrapper wrapper-content animated fadeInRight">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="ibox float-e-margins">
+                            <div class="ibox-title">
+                                <h5>搜索&amp;操作</h5>
+                                <div class="ibox-tools">
+                                    <a class="collapse-link">
+                                        <i class="fa fa-chevron-up"></i>
+                                    </a>
+                                </div>
                             </div>
-                        </div>
-                        <div class="ibox-content" style="display: block;">
-                            <form action="/goods-order/findGoodOrder">
-                                <div class="row">
-                                    <div class="col-sm-2 m-b-xs">
-                                        <input id="orderNo" name="orderNo" placeholder="按订单单号查找" class="form-control" type="text" />
+                            <div class="ibox-content" style="display: block;">
+                                <form action="/goods-order/findGoodsOrder">
+                                    <div class="row">
+                                        <div class="col-sm-2 m-b-xs">
+                                            <input id="orderNo" name="orderNo" placeholder="按订单单号查找" class="form-control" type="text" />
+                                        </div>
+                                        <div class="col-sm-2 m-b-xs">
+                                            <input id="userId" name="userId" placeholder="按用户ID查找" class="form-control" type="text" />
+                                        </div>
+                                        <div class="col-sm-2 m-b-xs">
+                                            <input id="goodsId" name="goodsId" placeholder="按商品ID查找" class="form-control" type="text" />
+                                        </div>
+                                        <div class="col-sm-2 m-b-xs">
+                                            <button class="btn btn-primary select_btn" type="submit"><i class="fa fa-search"></i>&nbsp;&nbsp;&nbsp;&nbsp;<strong>搜索</strong></button>
+                                        </div>
                                     </div>
-                                    <div class="col-sm-2 m-b-xs">
-                                        <input id="userId" name="userId" placeholder="按用户ID查找" class="form-control" type="text" />
+                                </form>
+                                <!--<div class="row">
+                                    <div class="col-sm-6 m-b-xs">
+                                        <a class="btn btn-white add_btn" data-toggle="modal" data-target="#addGoodsOrder"><i class="fa fa-plus"></i>&nbsp;&nbsp;&nbsp;&nbsp;新增订单信息&nbsp;&nbsp;&nbsp;&nbsp;</a>
+                                        <a class="btn btn-danger delete_btn" data-toggle="modal" data-target="#deleteAllGoodsOrder"><i class="fa fa-trash-o"></i>&nbsp;&nbsp;&nbsp;&nbsp;批量删除&nbsp;&nbsp;&nbsp;&nbsp;</a>
                                     </div>
-                                    <div class="col-sm-2 m-b-xs">
-                                        <input id="goodsId" name="goodsId" placeholder="按商品ID查找" class="form-control" type="text" />
-                                    </div>
-                                    <div class="col-sm-2 m-b-xs">
-                                        <button class="btn btn-primary select_btn" type="submit"><i class="fa fa-search"></i>&nbsp;&nbsp;&nbsp;&nbsp;<strong>搜索</strong></button>
-                                    </div>
-                                </div>
-                            </form>
-                            <div class="row">
-                                <div class="col-sm-6 m-b-xs">
-                                    <a class="btn btn-white add_btn" data-toggle="modal" data-target="#addGoodsOrder"><i class="fa fa-plus"></i>&nbsp;&nbsp;&nbsp;&nbsp;新增订单信息&nbsp;&nbsp;&nbsp;&nbsp;</a>
-                                    <a class="btn btn-danger delete_btn" data-toggle="modal" data-target="#deleteAllGoodsOrder"><i class="fa fa-trash-o"></i>&nbsp;&nbsp;&nbsp;&nbsp;批量删除&nbsp;&nbsp;&nbsp;&nbsp;</a>
-                                </div>
+                                </div>-->
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-lg-12">
-                    <div class="ibox float-e-margins">
-                        <div class="ibox-title">
-                            <h5>订单列表</h5>
-                            <div class="ibox-tools">
-                                <a class="collapse-link">
-                                    <i class="fa fa-chevron-up"></i>
-                                </a>
+                    <div class="col-lg-12">
+                        <div class="ibox float-e-margins">
+                            <div class="ibox-title">
+                                <h5>订单列表</h5>
+                                <div class="ibox-tools">
+                                    <a class="collapse-link">
+                                        <i class="fa fa-chevron-up"></i>
+                                    </a>
+                                </div>
                             </div>
-                        </div>
-                        <div class="ibox-content">
-                            <div class="table-responsive">
-                                <table class=" table table-hover" data-page-size="10">
-                                    <thead>
-                                    <tr align="center">
-                                        <td width="1%"><input type="checkbox" style="margin-right: 5px" name="allcheck"/></td>
-                                        <td class="col-md-1">订单ID</td>
-                                        <td class="col-md-1">商品ID</td>
-                                        <td class="col-md-1">用户ID</td>
-                                        <td class="col-md-1">地址ID</td>
-                                        <td class="col-md-1">订单单号</td>
-                                        <td class="col-md-1">订单状态</td>
-                                        <td class="col-md-1">商品数量</td>
-                                        <td class="col-md-1">商品总价</td>
-                                        <td class="col-md-1">运费金额</td>
-                                        <td class="col-md-1">订单金额</td>
-                                        <td class="col-md-1">下单时间</td>
-                                        <td class="col-md-1">付款时间</td>
-                                        <td class="col-md-1">发货时间</td>
-                                        <td class="col-md-1">备注</td>
-                                        <td class="col-md-1">操作</td>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr align="center" th:each="goodsOrder : ${goodsOrderList}">
-                                        <td><input type="checkbox" name="check" value="${goodsOrder.orderId}" class="del" style="margin-right: 5px" /></td>
-                                        <td th:text="${goodsOrder.orderId}"></td>
-                                        <td th:text="${goodsOrder.goodsId}"></td>
-                                        <td th:text="${goodsOrder.userId}"></td>
-                                        <td th:text="${goodsOrder.addressId}"></td>
-                                        <td th:text="${goodsOrder.orderNo}"></td>
-                                        <td th:text="${goodsOrder.orderStatus}"></td>
-                                        <td th:text="${goodsOrder.goodsNum}"></td>
-                                        <td th:text="${goodsOrder.goodsAmount}"></td>
-                                        <td th:text="${goodsOrder.logisticsFee}"></td>
-                                        <td th:text="${goodsOrder.orderAmount}"></td>
-                                        <td th:text="${goodsOrder.creatTime}"></td>
-                                        <td th:text="${goodsOrder.payTime}"></td>
-                                        <td th:text="${goodsOrder.sendTime}"></td>
-                                        <td th:text="${goodsOrder.remark}"></td>
-                                        <td>
-                                            <a data-toggle="modal" data-target="#updateGoods" title="修改" onclick="updade(adminRoleInf)"><i class="fa fa-edit text-navy"></i></a>
-                                            &nbsp;&nbsp;&nbsp;&nbsp;
-                                            <a data-toggle="modal" data-target="#deleteGoods"  title="删除" ><i class="fa fa-trash-o text-navy"></i></a>
-                                        </td>
-                                    </tr>
-                                    </tbody>
-                                </table>
+                            <div class="ibox-content">
+                                <div class="table-responsive">
+                                    <table class=" table table-hover" data-page-size="10">
+                                        <thead>
+                                        <tr align="center">
+                                            <td width="1%"><input type="checkbox" style="margin-right: 5px" name="allcheck"/></td>
+                                            <td class="col-md-1">订单ID</td>
+                                            <td class="col-md-1">商品ID</td>
+                                            <td class="col-md-1">用户ID</td>
+                                            <td class="col-md-1">地址ID</td>
+                                            <td class="col-md-1">订单单号</td>
+                                            <td class="col-md-1">订单状态</td>
+                                            <td class="col-md-1">商品数量</td>
+                                            <td class="col-md-1">商品总价</td>
+                                            <td class="col-md-1">运费金额</td>
+                                            <td class="col-md-1">订单金额</td>
+                                            <td class="col-md-1">下单时间</td>
+                                            <td class="col-md-1">付款时间</td>
+                                            <td class="col-md-1">发货时间</td>
+                                            <td class="col-md-1">备注</td>
+                                            <!--<td class="col-md-1">操作</td>-->
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr align="center" th:each="goodsOrder : ${goodsOrderList}">
+                                            <td><input type="checkbox" name="check" value="${goodsOrder.orderId}" class="del" style="margin-right: 5px" /></td>
+                                            <td th:text="${goodsOrder.orderId}"></td>
+                                            <td th:text="${goodsOrder.goodsId}"></td>
+                                            <td th:text="${goodsOrder.userId}"></td>
+                                            <td th:text="${goodsOrder.addressId}"></td>
+                                            <td th:text="${goodsOrder.orderNo}"></td>
+                                            <td th:text="${goodsOrder.orderStatus}"></td>
+                                            <td th:text="${goodsOrder.goodsNum}"></td>
+                                            <td th:text="${goodsOrder.goodsAmount}"></td>
+                                            <td th:text="${goodsOrder.logisticsFee}"></td>
+                                            <td th:text="${goodsOrder.orderAmount}"></td>
+                                            <td th:text="${goodsOrder.creatTime}"></td>
+                                            <td th:text="${goodsOrder.payTime}"></td>
+                                            <td th:text="${goodsOrder.sendTime}"></td>
+                                            <td th:text="${goodsOrder.remark}"></td>
+                                            <!--<td>
+                                                <a data-toggle="modal" data-target="#updateGoods" title="修改" class="goodsOrderEdit1"><i class="fa fa-edit text-navy"></i></a>
+                                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                                <a data-toggle="modal" data-target="#deleteGoods" title="删除" class="goodsOrderEdit2"><i class="fa fa-trash-o text-navy"></i></a>
+                                            </td>-->
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+            <div class="footer" th:include="/commons/footer :: footer"></div>
         </div>
-        <div class="footer" th:include="/commons/footer :: footer"></div>
     </div>
-</div>
 </body>
 </html>

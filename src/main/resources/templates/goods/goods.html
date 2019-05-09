@@ -97,7 +97,7 @@
                                 </form>
                                 <div class="row">
                                     <div class="col-sm-6 m-b-xs">
-                                        <a class="btn btn-white add_btn" data-toggle="modal" data-target="#addGoods"><i class="fa fa-plus"></i>&nbsp;&nbsp;&nbsp;&nbsp;新增用户&nbsp;&nbsp;&nbsp;&nbsp;</a>
+                                        <a class="btn btn-white add_btn" data-toggle="modal" data-target="#addGoods"><i class="fa fa-plus"></i>&nbsp;&nbsp;&nbsp;&nbsp;新增商品信息&nbsp;&nbsp;&nbsp;&nbsp;</a>
                                         <a class="btn btn-danger delete_btn" data-toggle="modal" data-target="#deleteAllGoods"><i class="fa fa-trash-o"></i>&nbsp;&nbsp;&nbsp;&nbsp;批量删除&nbsp;&nbsp;&nbsp;&nbsp;</a>
                                     </div>
                                 </div>
@@ -145,11 +145,11 @@
                                             <td th:text="${goods.warnStock}"></td>
                                             <td th:text="${goods.goodsPoint}"></td>
                                             <td th:text="${goods.pictureUrl}"></td>
-                                            <td th:text="${goods.creatTime}"></td>
+                                            <td th:text="${#dates.format(goods.creatTime,'yyyy-MM-dd HH:mm:ss')}"></td>
                                             <td>
-                                                <a data-toggle="modal" data-target="#updateGoods" title="修改" onclick="updade(adminRoleInf)"><i class="fa fa-edit text-navy"></i></a>
+                                                <a data-toggle="modal" data-target="#updateGoods" title="修改" class="goodsEdit1"><i class="fa fa-edit text-navy"></i></a>
                                                 &nbsp;&nbsp;&nbsp;&nbsp;
-                                                <a data-toggle="modal" data-target="#deleteGoods"  title="删除" ><i class="fa fa-trash-o text-navy"></i></a>
+                                                <a data-toggle="modal" data-target="#deleteGoods" title="删除" class="goodsEdit2"><i class="fa fa-trash-o text-navy"></i></a>
                                             </td>
                                         </tr>
                                         </tbody>
@@ -163,5 +163,221 @@
             <div class="footer" th:include="/commons/footer :: footer"></div>
         </div>
     </div>
+
+    <!-- 增加模态框，单击增加按钮，弹出表单 -->
+    <div class="modal fade" id="addGoods" tabindex="-1" role="dialog" data-toggle="modal"
+         aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+
+        <div class="modal-dialog" style="width: 400px">
+            <form class="addAdminform" th:action="@{/goods/addGoods}" method="post" id="AddCheck">
+                <div class="modal-content">
+                    <div class="modal-header"
+                         style="background-color: #00a0f0; color: white;">
+                        <button type="button" class="close" data-dismiss="modal"
+                                aria-hidden="true">&times;
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel1">添加商品信息</h4>
+                    </div>
+                    <!-- .modal-header -->
+                    <div class="modal-body addModal">
+                        <div>
+                            <label>商品名称</label>
+                            <input type="text" value="" id='nameAdd' class="form-control" name="name"
+                                   title="" required=""/>
+                        </div>
+                        <div>
+                            <label>销售价格</label>
+                            <input type="text" value="" id='priceAdd' class="form-control" name="price"
+                                   title="" required="" />
+                        </div>
+                        <div>
+                            <label>商品型号</label>
+                            <input type="text" value="" id='marqueAdd' class="form-control" name="marque"
+                                   title="" required=""/>
+                        </div>
+                        <div>
+                            <label>成本价格</label>
+                            <input type="text" value="" id='costPriceAdd' class="form-control" name="costPrice"
+                                   title="" required=""/>
+                        </div>
+                        <div>
+                            <label>库存数量</label>
+                            <input type="text" value="" id='stockAdd' class="form-control" name="stock"
+                                   title="" required=""/>
+                        </div>
+                        <div>
+                            <label>告警库存</label>
+                            <input type="text" value="" id='warnStokAdd' class="form-control" name="warnStock"
+                                   title="" required=""/>
+                        </div>
+                        <div>
+                            <label>商品积分</label>
+                            <input type="text" value="" id='goodsPointAdd' class="form-control" name="goodsPoint"
+                                   title="" required=""/>
+                        </div>
+                        <div>
+                            <label>商品图片url</label>
+                            <input type="url" value="" id='pictureUrlAdd' class="form-control" name="pictureUrl"
+                                   title="" required=""/>
+                        </div>
+                    </div>
+                    <!-- modal-body -->
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default closeBtn"
+                                data-dismiss="modal">取消
+                        </button>
+                        <button type="submit" id="submit_add" class="btn btn-primary">添加</button>
+                    </div> <!-- modal-footer -->
+                </div> <!-- /.modal-content -->
+            </form>
+        </div> <!-- /.modal-dialog -->
+    </div>
+    <!--.modal-->
+
+    <!-- 修改模态框，单击修改按钮，弹出表单 -->
+    <div class="modal fade" id="updateGoods" tabindex="-1" role="dialog" data-toggle="modal"
+         aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+
+        <div class="modal-dialog" style="width: 400px">
+            <form class="addAdminform" th:action="@{/goods/updateGoods}" method="post" id="updateCheck">
+                <div class="modal-content">
+                    <div class="modal-header"
+                         style="background-color: #00a0f0; color: white;">
+                        <button type="button" class="close" data-dismiss="modal"
+                                aria-hidden="true">&times;
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel2">修改商品信息</h4>
+                    </div>
+                    <!-- .modal-header -->
+                    <div class="modal-body addModal">
+                        <input type="hidden" name="goodsId" value="" id="goodsIdUpdate"/>
+                        <!--<input type="hidden" name="status" value="1" id="status"/>-->
+                        <div>
+                            <label>商品名称</label>
+                            <input type="text" value="" id='nameUpdate' class="form-control" name="name"
+                                   title="" required=""/>
+                        </div>
+                        <div>
+                            <label>销售价格</label>
+                            <input type="text" value="" id='priceUpdate' class="form-control" name="price"
+                                   title="" required="" />
+                        </div>
+                        <div>
+                            <label>商品型号</label>
+                            <input type="text" value="" id='marqueUpdate' class="form-control" name="marque"
+                                   title="" required=""/>
+                        </div>
+                        <div>
+                            <label>成本价格</label>
+                            <input type="text" value="" id='costPriceUpdate' class="form-control" name="costPrice"
+                                   title="" required=""/>
+                        </div>
+                        <div>
+                            <label>库存数量</label>
+                            <input type="text" value="" id='stockUpdate' class="form-control" name="stock"
+                                   title="" required=""/>
+                        </div>
+                        <div>
+                            <label>告警库存</label>
+                            <input type="text" value="" id='warnStockUpdate' class="form-control" name="warnStock"
+                                   title="" required=""/>
+                        </div>
+                        <div>
+                            <label>商品积分</label>
+                            <input type="text" value="" id='goodsPointUpdate' class="form-control" name="goodsPoint"
+                                   title="" required=""/>
+                        </div>
+                        <div>
+                            <label>商品图片url</label>
+                            <input type="url" value="" id='pictureUrlUpdate' class="form-control" name="pictureUrl"
+                                   title="" required=""/>
+                        </div>
+                    </div>
+                    <!-- modal-body -->
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default closeBtn"
+                                data-dismiss="modal">取消
+                        </button>
+                        <button type="submit" id="submit_update" class="btn btn-primary">修改</button>
+                    </div> <!-- modal-footer -->
+                </div> <!-- /.modal-content -->
+            </form>
+        </div> <!-- /.modal-dialog -->
+    </div>
+    <!--.modal-->
+
+
+    <!-- 删除模态框，单击修改按钮，弹出表单 -->
+    <div class="modal fade" id="deleteGoods" tabindex="-1" role="dialog" data-toggle="modal"
+         aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+
+        <div class="modal-dialog" style="width: 400px">
+            <form class="addAdminform" th:action="@{/goods/deleteGoods}" method="post" id="deleteCheck">
+                <div class="modal-content">
+                    <div class="modal-header"
+                         style="background-color: #00a0f0; color: white;">
+                        <button type="button" class="close" data-dismiss="modal"
+                                aria-hidden="true">&times;
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel3">删除商品信息</h4>
+                    </div>
+                    <!-- .modal-header -->
+                    <div class="modal-body addModal">
+                        <input type="hidden" name="goodsId" value="" id="deleteGoodsId"/>
+                    </div>
+                    <!-- modal-body -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default closeBtn"
+                                data-dismiss="modal">取消
+                        </button>
+                        <button type="submit" id="submit_delete" class="btn btn-primary">删除</button>
+                    </div> <!-- modal-footer -->
+                </div> <!-- /.modal-content -->
+            </form>
+        </div> <!-- /.modal-dialog -->
+    </div>
+    <!--.modal-->
+
+    <script>
+        $(".goodsEdit1").click(function (){
+            var goodsId = $(this).parent().parent().children().eq(1).text();
+            var name = $(this).parent().parent().children().eq(2).text();
+            var price = $(this).parent().parent().children().eq(3).text();
+            var marque = $(this).parent().parent().children().eq(4).text();
+            var costPrice = $(this).parent().parent().children().eq(5).text();
+            var stock = $(this).parent().parent().children().eq(6).text();
+            var warnStock = $(this).parent().parent().children().eq(7).text();
+            var goodsPoint = $(this).parent().parent().children().eq(8).text();
+            var pictureUrl = $(this).parent().parent().children().eq(9).text();
+            $("#goodsIdUpdate").val(goodsId);
+            $("#nameUpdate").val(name);
+            $("#priceUpdate").val(price);
+            $("#marqueUpdate").val(marque);
+            $("#costPriceUpdate").val(costPrice);
+            $("#stockUpdate").val(stock);
+            $("#warnStockUpdate").val(warnStock);
+            $("#goodsPointUpdate").val(goodsPoint);
+            $("#pictureUrlUpdate").val(pictureUrl);
+        })
+
+        $(".goodsEdit2").click(function () {
+            var goodsId = $(this).parent().parent().children().eq(1).text();
+            $("#deleteGoodsId").val(goodsId);
+        })
+    </script>
+
+    <script th:inline="javascript">
+        var msg = [[${msg}]];
+        $(document).ready(function () {
+            if(msg!=null){
+                swal({
+                    title : "温馨提示",
+                    text : msg
+                });
+            }
+        });
+    </script>
 </body>
 </html>

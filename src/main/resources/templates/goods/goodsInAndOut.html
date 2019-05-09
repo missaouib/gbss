@@ -94,7 +94,7 @@
                                 </form>
                                 <div class="row">
                                     <div class="col-sm-6 m-b-xs">
-                                        <a class="btn btn-white add_btn" data-toggle="modal" data-target="#addGoods"><i class="fa fa-plus"></i>&nbsp;&nbsp;&nbsp;&nbsp;新增商品进销存信息&nbsp;&nbsp;&nbsp;&nbsp;</a>
+                                        <a class="btn btn-white add_btn" data-toggle="modal" data-target="#addGoodsInAndOut"><i class="fa fa-plus"></i>&nbsp;&nbsp;&nbsp;&nbsp;新增商品进销存信息&nbsp;&nbsp;&nbsp;&nbsp;</a>
                                         <a class="btn btn-danger delete_btn" data-toggle="modal" data-target="#deleteAllGoodsInAndOut"><i class="fa fa-trash-o"></i>&nbsp;&nbsp;&nbsp;&nbsp;批量删除&nbsp;&nbsp;&nbsp;&nbsp;</a>
                                     </div>
                                 </div>
@@ -121,7 +121,7 @@
                                             <td class="col-md-1">商品ID</td>
                                             <td class="col-md-1">管理员ID</td>
                                             <td class="col-md-1">出入库数量</td>
-                                            <td class="col-md-1">单价</td>
+                                            <td class="col-md-1">单价(￥)</td>
                                             <td class="col-md-1">小计金额</td>
                                             <td class="col-md-1">旧库存</td>
                                             <td class="col-md-1">新库存</td>
@@ -154,9 +154,9 @@
                                             <td th:text="${goodsInAndOut.result}"></td>
                                             <td th:text="${goodsInAndOut.inOutDatetime}"></td>
                                             <td>
-                                                <a data-toggle="modal" data-target="#updateGoodsInAndOut" title="修改" onclick="updade(adminRoleInf)"><i class="fa fa-edit text-navy"></i></a>
+                                                <a data-toggle="modal" data-target="#updateGoodsInAndOut" title="修改" class="goodsInAndOutEdit1"><i class="fa fa-edit text-navy"></i></a>
                                                 &nbsp;&nbsp;&nbsp;&nbsp;
-                                                <a data-toggle="modal" data-target="#deleteGoodsInAndOut"  title="删除" ><i class="fa fa-trash-o text-navy"></i></a>
+                                                <a data-toggle="modal" data-target="#deleteGoodsInAndOut" title="删除" class="goodsInAndOutEdit2"><i class="fa fa-trash-o text-navy"></i></a>
                                             </td>
                                         </tr>
                                         </tbody>
@@ -170,5 +170,293 @@
             <div class="footer" th:include="/commons/footer :: footer"></div>
         </div>
     </div>
+
+    <!-- 增加模态框，单击增加按钮，弹出表单 -->
+    <div class="modal fade" id="addGoodsInAndOut" tabindex="-1" role="dialog" data-toggle="modal"
+         aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+
+        <div class="modal-dialog" style="width: 400px">
+            <form class="addAdminform" th:action="@{/goods-in-and-out/addGoodsInAndOut}" method="post" id="AddCheck">
+                <div class="modal-content">
+                    <div class="modal-header"
+                         style="background-color: #00a0f0; color: white;">
+                        <button type="button" class="close" data-dismiss="modal"
+                                aria-hidden="true">&times;
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel1">新增商品进销存信息</h4>
+                    </div>
+                    <!-- .modal-header -->
+                    <div class="modal-body addModal">
+                        <div>
+                            <label>商品ID</label>
+                            <input type="text" value="" id='goodsIdAdd' class="form-control" name="goodsId"
+                                   title="" required=""/>
+                        </div>
+                        <div>
+                            <label>管理员ID</label>
+                            <input type="text" value="" id='adminIdAdd' class="form-control" name="adminId"
+                                   title="" required="" />
+                        </div>
+                        <div>
+                            <label>出入库数量</label>
+                            <input type="text" value="" id='numberAdd' class="form-control" name="number"
+                                   title="" required=""/>
+                        </div>
+                        <div>
+                            <label>单价(￥)</label>
+                            <input type="text" value="" id='priceAdd' class="form-control" name="price"
+                                   title="" required=""/>
+                        </div>
+                        <div>
+                            <label>小计金额</label>
+                            <input type="text" value="" id='subTotalAdd' class="form-control" name="subTotal"
+                                   title="" required=""/>
+                        </div>
+                        <div>
+                            <label>旧库存</label>
+                            <input type="text" value="" id='stockOldAdd' class="form-control" name="stockOld"
+                                   title="" required=""/>
+                        </div>
+                        <div>
+                            <label>新库存</label>
+                            <input type="text" value="" id='stockNewAdd' class="form-control" name="stockNew"
+                                   title="" required=""/>
+                        </div>
+                        <div>
+                            <label>出入库方向</label>
+                            <input type="text" value="" id='directionAdd' class="form-control" name="direction"
+                                   title="" required=""/>
+                        </div>
+                        <div>
+                            <label>出入库类型</label>
+                            <input type="text" value="" id='operateTypeAdd' class="form-control" name="operateType"
+                                   title="" required=""/>
+                        </div>
+                        <div>
+                            <label>订单编号</label>
+                            <input type="text" value="" id='orderIdAdd' class="form-control" name="orderId"
+                                   title="" required=""/>
+                        </div>
+                        <div>
+                            <label>供应商编号</label>
+                            <input type="text" value="" id='providerIdAdd' class="form-control" name="providerId"
+                                   title="" required=""/>
+                        </div>
+                        <div>
+                            <label>备注信息</label>
+                            <input type="text" value="" id='remarkAdd' class="form-control" name="remark"
+                                   title="" required=""/>
+                        </div>
+                        <div>
+                            <label>出入库结果</label>
+                            <input type="text" value="" id='resultAdd' class="form-control" name="result"
+                                   title="" required=""/>
+                        </div>
+                        <div>
+                            <label>出入库日期</label>
+                            <input type="date" value="" id='inOutDatetimeAdd' class="form-control" name="inOutDatetime"
+                                   title="" required=""/>
+                        </div>
+                    </div>
+                    <!-- modal-body -->
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default closeBtn"
+                                data-dismiss="modal">取消
+                        </button>
+                        <button type="submit" id="submit_add" class="btn btn-primary">添加</button>
+                    </div> <!-- modal-footer -->
+                </div> <!-- /.modal-content -->
+            </form>
+        </div> <!-- /.modal-dialog -->
+    </div>
+    <!--.modal-->
+
+    <!-- 修改模态框，单击修改按钮，弹出表单 -->
+    <div class="modal fade" id="updateGoodsInAndOut" tabindex="-1" role="dialog" data-toggle="modal"
+         aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+
+        <div class="modal-dialog" style="width: 400px">
+            <form class="addAdminform" th:action="@{/goods-in-and-out/updateGoodsInAndOut}" method="post" id="updateCheck">
+                <div class="modal-content">
+                    <div class="modal-header"
+                         style="background-color: #00a0f0; color: white;">
+                        <button type="button" class="close" data-dismiss="modal"
+                                aria-hidden="true">&times;
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel2">修改商品进销存信息</h4>
+                    </div>
+                    <!-- .modal-header -->
+                    <div class="modal-body addModal">
+                        <input type="hidden" name="inAndOutId" value="" id="inAndOutIdUpdate"/>
+                        <!--<input type="hidden" name="status" value="1" id="status"/>-->
+                        <div>
+                            <label>商品ID</label>
+                            <input type="text" value="" id='goodsIdUpdate' class="form-control" name="goodsId"
+                                   title="" required=""/>
+                        </div>
+                        <div>
+                            <label>管理员ID</label>
+                            <input type="text" value="" id='adminIdUpdate' class="form-control" name="adminId"
+                                   title="" required="" />
+                        </div>
+                        <div>
+                            <label>出入库数量</label>
+                            <input type="text" value="" id='numberUpdate' class="form-control" name="number"
+                                   title="" required=""/>
+                        </div>
+                        <div>
+                            <label>单价(￥)</label>
+                            <input type="text" value="" id='priceUpdate' class="form-control" name="price"
+                                   title="" required=""/>
+                        </div>
+                        <div>
+                            <label>小计金额</label>
+                            <input type="text" value="" id='subTotalUpdate' class="form-control" name="subTotal"
+                                   title="" required=""/>
+                        </div>
+                        <div>
+                            <label>旧库存</label>
+                            <input type="text" value="" id='stockOldUpdate' class="form-control" name="stockOld"
+                                   title="" required=""/>
+                        </div>
+                        <div>
+                            <label>新库存</label>
+                            <input type="text" value="" id='stockNewUpdate' class="form-control" name="stockNew"
+                                   title="" required=""/>
+                        </div>
+                        <div>
+                            <label>出入库方向</label>
+                            <input type="text" value="" id='directionUpdate' class="form-control" name="direction"
+                                   title="" required=""/>
+                        </div>
+                        <div>
+                            <label>出入库类型</label>
+                            <input type="text" value="" id='operateTypeUpdate' class="form-control" name="operateType"
+                                   title="" required=""/>
+                        </div>
+                        <div>
+                            <label>订单编号</label>
+                            <input type="text" value="" id='orderIdUpdate' class="form-control" name="orderId"
+                        title="" required=""/>
+                    </div>
+                        <div>
+                            <label>供应商编号</label>
+                            <input type="text" value="" id='providerIdUpdate' class="form-control" name="providerId"
+                                   title="" required=""/>
+                        </div>
+                        <div>
+                            <label>备注信息</label>
+                            <input type="text" value="" id='remarkUpdate' class="form-control" name="remark"
+                                   title="" required=""/>
+                        </div>
+                        <div>
+                            <label>出入库结果</label>
+                            <input type="text" value="" id='resultUpdate' class="form-control" name="result"
+                                   title="" required=""/>
+                        </div>
+                        <div>
+                            <label>出入库日期</label>
+                            <input type="date" value="" id='inOutDatetimeUpdate' class="form-control" name="inOutDatetime"
+                                   title="" required=""/>
+                        </div>
+                    </div>
+                    <!-- modal-body -->
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default closeBtn"
+                                data-dismiss="modal">取消
+                        </button>
+                        <button type="submit" id="submit_update" class="btn btn-primary">修改</button>
+                    </div> <!-- modal-footer -->
+                </div> <!-- /.modal-content -->
+            </form>
+        </div> <!-- /.modal-dialog -->
+    </div>
+    <!--.modal-->
+
+    <!-- 删除模态框，单击修改按钮，弹出表单 -->
+    <div class="modal fade" id="deleteGoodsInAndOut" tabindex="-1" role="dialog" data-toggle="modal"
+         aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+
+        <div class="modal-dialog" style="width: 400px">
+            <form class="addAdminform" th:action="@{/goods-in-and-out/deleteGoodsInAndOut}" method="post" id="deleteCheck">
+                <div class="modal-content">
+                    <div class="modal-header"
+                         style="background-color: #00a0f0; color: white;">
+                        <button type="button" class="close" data-dismiss="modal"
+                                aria-hidden="true">&times;
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel3">删除商品进销存信息</h4>
+                    </div>
+                    <!-- .modal-header -->
+                    <div class="modal-body addModal">
+                        <input type="hidden" name="inAndOutId" value="" id="deleteInAndOutId"/>
+                    </div>
+                    <!-- modal-body -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default closeBtn"
+                                data-dismiss="modal">取消
+                        </button>
+                        <button type="submit" id="submit_delete" class="btn btn-primary">删除</button>
+                    </div> <!-- modal-footer -->
+                </div> <!-- /.modal-content -->
+            </form>
+        </div> <!-- /.modal-dialog -->
+    </div>
+    <!--.modal-->
+
+    <script>
+        $(".goodsInAndOutEdit1").click(function (){
+            var inAndOutId = $(this).parent().parent().children().eq(1).text();
+            var goodsId = $(this).parent().parent().children().eq(2).text();
+            var adminId = $(this).parent().parent().children().eq(3).text();
+            var number = $(this).parent().parent().children().eq(4).text();
+            var price = $(this).parent().parent().children().eq(5).text();
+            var subTotal = $(this).parent().parent().children().eq(6).text();
+            var stockOld = $(this).parent().parent().children().eq(7).text();
+            var stockNew = $(this).parent().parent().children().eq(8).text();
+            var direction = $(this).parent().parent().children().eq(9).text();
+            var operateType= $(this).parent().parent().children().eq(10).text();
+            var orderId = $(this).parent().parent().children().eq(11).text();
+            var providerId = $(this).parent().parent().children().eq(12).text();
+            var remark = $(this).parent().parent().children().eq(13).text();
+            var result = $(this).parent().parent().children().eq(14).text();
+            var inOutDatetime = $(this).parent().parent().children().eq(15).text();
+            $("#inAndOutIdUpdate").val(inAndOutId);
+            $("#goodsIdUpdate").val(goodsId);
+            $("#adminIdUpdate").val(adminId);
+            $("#numberUpdate").val(number);
+            $("#priceUpdate").val(price);
+            $("#subTotalUpdate").val(subTotal);
+            $("#stockOldUpdate").val(stockOld);
+            $("#stockNewUpdate").val(stockNew);
+            $("#directionUpdate").val(direction);
+            $("#operateTypeUpdate").val(operateType);
+            $("#orderIdUpdate").val(orderId);
+            $("#providerIdUpdate").val(providerId);
+            $("#remarkUpdate").val(remark);
+            $("#resultUpdate").val(result);
+            $("#inOutDatetimeUpdate").val(inOutDatetime);
+        })
+
+        $(".goodsInAndOutEdit2").click(function () {
+            var inAndOutId = $(this).parent().parent().children().eq(1).text();
+            $("#deleteInAndOutId").val(inAndOutId);
+        })
+
+    </script>
+
+    <script th:inline="javascript">
+        var msg = [[${msg}]];
+        $(document).ready(function () {
+            if(msg!=null){
+                swal({
+                    title : "温馨提示",
+                    text : msg
+                });
+            }
+        });
+    </script>
 </body>
 </html>

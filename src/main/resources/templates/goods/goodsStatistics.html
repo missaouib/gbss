@@ -147,9 +147,9 @@
                                             <td th:text="${goodsStatistics.costPrice}"></td>
                                             <td th:text="${goodsStatistics.grossProfit}"></td>
                                             <td>
-                                                <a data-toggle="modal" data-target="#updateGoodsStatistics" title="修改" onclick="updade(adminRoleInf)"><i class="fa fa-edit text-navy"></i></a>
+                                                <a data-toggle="modal" data-target="#updateGoodsStatistics" title="修改" class="goodsStatisticsEdit1"><i class="fa fa-edit text-navy"></i></a>
                                                 &nbsp;&nbsp;&nbsp;&nbsp;
-                                                <a data-toggle="modal" data-target="#deleteGoodsStatistics"  title="删除" ><i class="fa fa-trash-o text-navy"></i></a>
+                                                <a data-toggle="modal" data-target="#deleteGoodsStatistics" title="删除" class="goodsStatisticsEdit2"><i class="fa fa-trash-o text-navy"></i></a>
                                             </td>
                                         </tr>
                                         </tbody>
@@ -163,5 +163,234 @@
             <div class="footer" th:include="/commons/footer :: footer"></div>
         </div>
     </div>
+
+    <!-- 增加模态框，单击增加按钮，弹出表单 -->
+    <div class="modal fade" id="addGoodsStatistics" tabindex="-1" role="dialog" data-toggle="modal"
+         aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+
+        <div class="modal-dialog" style="width: 400px">
+            <form class="addAdminform" th:action="@{/goods-statistics/addGoodsStatistics}" method="post" id="AddCheck">
+                <div class="modal-content">
+                    <div class="modal-header"
+                         style="background-color: #00a0f0; color: white;">
+                        <button type="button" class="close" data-dismiss="modal"
+                                aria-hidden="true">&times;
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel1">新增商品统计信息</h4>
+                    </div>
+                    <!-- .modal-header -->
+                    <div class="modal-body addModal">
+                        <div>
+                            <label>商品ID</label>
+                            <input type="text" value="" id='goodsIdAdd' class="form-control" name="goodsId"
+                                   title="" required=""/>
+                        </div>
+                        <div>
+                            <label>浏览次数</label>
+                            <input type="text" value="" id='visitCountAdd' class="form-control" name="visitCount"
+                                   title="" required="" />
+                        </div>
+                        <div>
+                            <label>评论次数</label>
+                            <input type="text" value="" id='replyCountAdd' class="form-control" name="replyCount"
+                                   title="" required=""/>
+                        </div>
+                        <div>
+                            <label>销售总量</label>
+                            <input type="text" value="" id='totalSalesAdd' class="form-control" name="totalSales"
+                                   title="" required=""/>
+                        </div>
+                        <div>
+                            <label>销售总金额</label>
+                            <input type="text" value="" id='totalSalesAmountAdd' class="form-control" name="totalSalesAmount"
+                                   title="" required=""/>
+                        </div>
+                        <div>
+                            <label>进货总量</label>
+                            <input type="text" value="" id='inTotalAdd' class="form-control" name="inTotal"
+                                   title="" required=""/>
+                        </div>
+                        <div>
+                            <label>进货总金额</label>
+                            <input type="text" value="" id='inTotalAmountAdd' class="form-control" name="inTotalAmount"
+                                   title="" required=""/>
+                        </div>
+                        <div>
+                            <label>成本均价</label>
+                            <input type="text" value="" id='costPriceAdd' class="form-control" name="costPrice"
+                                   title="" required=""/>
+                        </div>
+                        <div>
+                            <label>毛利润金额</label>
+                            <input type="text" value="" id='grossProfitAdd' class="form-control" name="grossProfit"
+                                   title="" required=""/>
+                        </div>
+                    </div>
+                    <!-- modal-body -->
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default closeBtn"
+                                data-dismiss="modal">取消
+                        </button>
+                        <button type="submit" id="submit_add" class="btn btn-primary">添加</button>
+                    </div> <!-- modal-footer -->
+                </div> <!-- /.modal-content -->
+            </form>
+        </div> <!-- /.modal-dialog -->
+    </div>
+    <!--.modal-->
+
+    <!-- 修改模态框，单击修改按钮，弹出表单 -->
+    <div class="modal fade" id="updateGoodsStatistics" tabindex="-1" role="dialog" data-toggle="modal"
+         aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+
+        <div class="modal-dialog" style="width: 400px">
+            <form class="addAdminform" th:action="@{/goods-statistics/updateGoodsStatistics}" method="post" id="updateCheck">
+                <div class="modal-content">
+                    <div class="modal-header"
+                         style="background-color: #00a0f0; color: white;">
+                        <button type="button" class="close" data-dismiss="modal"
+                                aria-hidden="true">&times;
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel2">修改商品统计信息</h4>
+                    </div>
+                    <!-- .modal-header -->
+                    <div class="modal-body addModal">
+                        <input type="hidden" name="statisticsId" value="" id="statisticsIdUpdate"/>
+                        <!--<input type="hidden" name="status" value="1" id="status"/>-->
+                        <div>
+                            <label>商品ID</label>
+                            <input type="text" value="" id='goodsIdUpdate' class="form-control" name="goodsId"
+                                   title="" required="" readonly="readonly"/>
+                        </div>
+                        <div>
+                            <label>浏览次数</label>
+                            <input type="text" value="" id='visitCountUpdate' class="form-control" name="visitCount"
+                                   title="" required="" />
+                        </div>
+                        <div>
+                            <label>评论次数</label>
+                            <input type="text" value="" id='replyCountUpdate' class="form-control" name="replyCount"
+                                   title="" required=""/>
+                        </div>
+                        <div>
+                            <label>销售总量</label>
+                            <input type="text" value="" id='totalSalesUpdate' class="form-control" name="totalSales"
+                                   title="" required=""/>
+                        </div>
+                        <div>
+                            <label>销售总金额</label>
+                            <input type="text" value="" id='totalSalesAmountUpdate' class="form-control" name="totalSalesAmount"
+                                   title="" required=""/>
+                        </div>
+                        <div>
+                            <label>进货总量</label>
+                            <input type="text" value="" id='inTotalUpdate' class="form-control" name="inTotal"
+                                   title="" required=""/>
+                        </div>
+                        <div>
+                            <label>进货总金额</label>
+                            <input type="text" value="" id='inTotalAmountUpdate' class="form-control" name="inTotalAmount"
+                                   title="" required=""/>
+                        </div>
+                        <div>
+                            <label>成本均价</label>
+                            <input type="text" value="" id='costPriceUpdate' class="form-control" name="costPrice"
+                                   title="" required=""/>
+                        </div>
+                        <div>
+                            <label>毛利润金额</label>
+                            <input type="text" value="" id='grossProfitUpdate' class="form-control" name="grossProfit"
+                                   title="" required=""/>
+                        </div>
+                    </div>
+                    <!-- modal-body -->
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default closeBtn"
+                                data-dismiss="modal">取消
+                        </button>
+                        <button type="submit" id="submit_update" class="btn btn-primary">修改</button>
+                    </div> <!-- modal-footer -->
+                </div> <!-- /.modal-content -->
+            </form>
+        </div> <!-- /.modal-dialog -->
+    </div>
+    <!--.modal-->
+
+
+    <!-- 删除模态框，单击修改按钮，弹出表单 -->
+    <div class="modal fade" id="deleteGoodsStatistics" tabindex="-1" role="dialog" data-toggle="modal"
+         aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+
+        <div class="modal-dialog" style="width: 400px">
+            <form class="addAdminform" th:action="@{/goods-statistics/deleteGoodsStatistics}" method="post" id="deleteCheck">
+                <div class="modal-content">
+                    <div class="modal-header"
+                         style="background-color: #00a0f0; color: white;">
+                        <button type="button" class="close" data-dismiss="modal"
+                                aria-hidden="true">&times;
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel3">删除商品统计信息</h4>
+                    </div>
+                    <!-- .modal-header -->
+                    <div class="modal-body addModal">
+                        <input type="hidden" name="statisticsId" value="" id="deleteStatisticsId"/>
+                    </div>
+                    <!-- modal-body -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default closeBtn"
+                                data-dismiss="modal">取消
+                        </button>
+                        <button type="submit" id="submit_delete" class="btn btn-primary">删除</button>
+                    </div> <!-- modal-footer -->
+                </div> <!-- /.modal-content -->
+            </form>
+        </div> <!-- /.modal-dialog -->
+    </div>
+    <!--.modal-->
+
+    <script>
+        $(".goodsStatisticsEdit1").click(function (){
+            var statisticsId = $(this).parent().parent().children().eq(1).text();
+            var goodsId = $(this).parent().parent().children().eq(2).text();
+            var visitCount = $(this).parent().parent().children().eq(3).text();
+            var replyCount = $(this).parent().parent().children().eq(4).text();
+            var totalSales = $(this).parent().parent().children().eq(5).text();
+            var totalSalesAmount = $(this).parent().parent().children().eq(6).text();
+            var inTotal = $(this).parent().parent().children().eq(7).text();
+            var inTotalAmount = $(this).parent().parent().children().eq(8).text();
+            var costPrice = $(this).parent().parent().children().eq(9).text();
+            var grossProfit = $(this).parent().parent().children().eq(10).text();
+            $("#statisticsIdUpdate").val(statisticsId);
+            $("#goodsIdUpdate").val(goodsId);
+            $("#visitCountUpdate").val(visitCount);
+            $("#replyCountUpdate").val(replyCount);
+            $("#totalSalesUpdate").val(totalSales);
+            $("#totalSalesAmountUpdate").val(totalSalesAmount);
+            $("#inTotalUpdate").val(inTotal);
+            $("#inTotalAmountUpdate").val(inTotalAmount);
+            $("#costPriceUpdate").val(costPrice);
+            $("#grossProfitUpdate").val(grossProfit);
+        })
+
+        $(".goodsStatisticsEdit2").click(function () {
+            var statisticsId = $(this).parent().parent().children().eq(1).text();
+            $("#deleteStatisticsId").val(statisticsId);
+        })
+
+    </script>
+
+    <script th:inline="javascript">
+        var msg = [[${msg}]];
+        $(document).ready(function () {
+            if(msg!=null){
+                swal({
+                    title : "温馨提示",
+                    text : msg
+                });
+            }
+        });
+    </script>
 </body>
 </html>

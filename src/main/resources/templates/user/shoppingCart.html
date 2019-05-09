@@ -137,7 +137,7 @@
                                             <td th:text="${shoppingCart.goodsId}"></td>
                                             <td th:text="${shoppingCart.status}"></td>
                                             <td th:text="${shoppingCart.number}"></td>
-                                            <td th:text="${shoppingCart.creatTime}"></td>
+                                            <td th:text="${#dates.format(shoppingCart.creatTime,'yyyy-MM-dd HH:mm:ss')}"></td>
                                             <td>
                                                 <a data-toggle="modal" data-target="#updateShoppingCart" title="修改" class="shoppingCartEdit1"><i class="fa fa-edit text-navy"></i></a>
                                                 &nbsp;&nbsp;&nbsp;&nbsp;

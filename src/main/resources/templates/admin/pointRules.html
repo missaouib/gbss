@@ -135,7 +135,7 @@
                                             <td th:text="${userPointRules.adminId}"></td>
                                             <td th:text="${userPointRules.name}"></td>
                                             <td th:text="${userPointRules.description}"></td>
-                                            <td th:text="${userPointRules.createDate}"></td>
+                                            <td th:text="${#dates.format(userPointRules.createDate,'yyyy-MM-dd HH:mm:ss')}"></td>
                                             <td>
                                                 <a data-toggle="modal" data-target="#updateUserPointRules" title="修改" class="userPointRulesEdit1"><i class="fa fa-edit text-navy"></i></a>
                                                 &nbsp;&nbsp;&nbsp;&nbsp;

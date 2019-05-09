@@ -39,6 +39,8 @@
     <script th:src="@{/js/common.js}"></script>
     <!-- Sweet alert -->
     <script th:src="@{/js/plugins/sweetalert/sweetalert.min.js}"></script>
+    <!--ip-->
+    <script src="http://pv.sohu.com/cityjson?ie=utf-8"></script>
 
 
 </head>
@@ -178,6 +180,8 @@
                     </div>
                     <!-- .modal-header -->
                     <div class="modal-body addModal">
+                        <input type="hidden" name="ip" value="" id="ip"/>
+                        <input type="hidden" name="cname" value="" id="cname"/>
                         <div>
                             <label>用户名</label>
                             <input type="text" value="" id='userNameAdd' class="form-control" name="userName"
@@ -315,6 +319,14 @@
             var userId = $(this).parent().parent().children().eq(1).text();
             $("#deleteUserId").val(userId);
         })
+
+        $(".add_btn").click(function () {
+            var ip=returnCitySN['cip'];
+            var cname = returnCitySN["cname"];
+            $("#ip").val(ip);
+            $("#cname").val(cname);
+        })
+
     </script>
 
     <script th:inline="javascript">
