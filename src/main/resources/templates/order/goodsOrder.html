@@ -95,12 +95,12 @@
                                         </div>
                                     </div>
                                 </form>
-                                <!--<div class="row">
+                                <div class="row">
                                     <div class="col-sm-6 m-b-xs">
                                         <a class="btn btn-white add_btn" data-toggle="modal" data-target="#addGoodsOrder"><i class="fa fa-plus"></i>&nbsp;&nbsp;&nbsp;&nbsp;新增订单信息&nbsp;&nbsp;&nbsp;&nbsp;</a>
                                         <a class="btn btn-danger delete_btn" data-toggle="modal" data-target="#deleteAllGoodsOrder"><i class="fa fa-trash-o"></i>&nbsp;&nbsp;&nbsp;&nbsp;批量删除&nbsp;&nbsp;&nbsp;&nbsp;</a>
                                     </div>
-                                </div>-->
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -115,26 +115,26 @@
                                 </div>
                             </div>
                             <div class="ibox-content">
-                                <div class="table-responsive">
-                                    <table class=" table table-hover" data-page-size="10">
+                                <div class="table-responsive" style="overflow: scroll">
+                                    <table class=" table table-hover" data-page-size="10" style="width: 1500px">
                                         <thead>
                                         <tr align="center">
                                             <td width="1%"><input type="checkbox" style="margin-right: 5px" name="allcheck"/></td>
-                                            <td class="col-md-1">订单ID</td>
-                                            <td class="col-md-1">商品ID</td>
-                                            <td class="col-md-1">用户ID</td>
-                                            <td class="col-md-1">地址ID</td>
-                                            <td class="col-md-1">订单单号</td>
-                                            <td class="col-md-1">订单状态</td>
-                                            <td class="col-md-1">商品数量</td>
-                                            <td class="col-md-1">商品总价</td>
-                                            <td class="col-md-1">运费金额</td>
-                                            <td class="col-md-1">订单金额</td>
-                                            <td class="col-md-1">下单时间</td>
-                                            <td class="col-md-1">付款时间</td>
-                                            <td class="col-md-1">发货时间</td>
+                                            <td>订单ID</td>
+                                            <td>商品ID</td>
+                                            <td>用户ID</td>
+                                            <td>地址ID</td>
+                                            <td>订单单号</td>
+                                            <td>订单状态</td>
+                                            <td>商品数量</td>
+                                            <td>商品总价</td>
+                                            <td>运费金额</td>
+                                            <td>订单金额</td>
+                                            <td>下单时间</td>
+                                            <td>付款时间</td>
+                                            <td>发货时间</td>
                                             <td class="col-md-1">备注</td>
-                                            <!--<td class="col-md-1">操作</td>-->
+                                            <td class="col-md-1">操作</td>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -150,15 +150,15 @@
                                             <td th:text="${goodsOrder.goodsAmount}"></td>
                                             <td th:text="${goodsOrder.logisticsFee}"></td>
                                             <td th:text="${goodsOrder.orderAmount}"></td>
-                                            <td th:text="${goodsOrder.creatTime}"></td>
-                                            <td th:text="${goodsOrder.payTime}"></td>
-                                            <td th:text="${goodsOrder.sendTime}"></td>
+                                            <td th:text="${#dates.format(goodsOrder.creatTime,'yyyy-MM-dd HH:mm:ss')}"></td>
+                                            <td th:text="${#dates.format(goodsOrder.payTime,'yyyy-MM-dd HH:mm:ss')}"></td>
+                                            <td th:text="${#dates.format(goodsOrder.sendTime,'yyyy-MM-dd HH:mm:ss')}"></td>
                                             <td th:text="${goodsOrder.remark}"></td>
-                                            <!--<td>
+                                            <td>
                                                 <a data-toggle="modal" data-target="#updateGoods" title="修改" class="goodsOrderEdit1"><i class="fa fa-edit text-navy"></i></a>
                                                 &nbsp;&nbsp;&nbsp;&nbsp;
                                                 <a data-toggle="modal" data-target="#deleteGoods" title="删除" class="goodsOrderEdit2"><i class="fa fa-trash-o text-navy"></i></a>
-                                            </td>-->
+                                            </td>
                                         </tr>
                                         </tbody>
                                     </table>
@@ -171,5 +171,188 @@
             <div class="footer" th:include="/commons/footer :: footer"></div>
         </div>
     </div>
+
+    <!-- 增加模态框，单击增加按钮，弹出表单 -->
+    <div class="modal fade" id="addGoodsOrder" tabindex="-1" role="dialog" data-toggle="modal"
+         aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+
+        <div class="modal-dialog" style="width: 400px">
+            <form class="addAdminform" th:action="@{/goods-order/addGoodsOrder}" method="post" id="AddCheck">
+                <div class="modal-content">
+                    <div class="modal-header"
+                         style="background-color: #00a0f0; color: white;">
+                        <button type="button" class="close" data-dismiss="modal"
+                                aria-hidden="true">&times;
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel1">新增订单信息</h4>
+                    </div>
+                    <!-- .modal-header -->
+                    <div class="modal-body addModal">
+                        <div>
+                            <label>用户ID</label>
+                            <input type="text" value="" id='userIdAdd' class="form-control" name="userId"
+                                   title="" required=""/>
+                        </div>
+                        <div>
+                            <label>商品ID</label>
+                            <input type="text" value="" id='goodsIdAdd' class="form-control" name="goodsId"
+                                   title="" required="" />
+                        </div>
+                        <div>
+                            <label>地址ID</label>
+                            <input type="text" value="" id='addressIdAdd' class="form-control" name="addressId"
+                                   title="" required="" />
+                        </div>
+                        <div>
+                            <label>购买数量</label>
+                            <input type="text" value="" id='numberAdd' class="form-control" name="goodsNum"
+                                   title="" required=""/>
+                        </div>
+                        <div>
+                            <label>备注</label>
+                            <input type="text" value="" id='remarkAdd' class="form-control" name="remark"
+                                   title="" required="" />
+                        </div>
+                    </div>
+                    <!-- modal-body -->
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default closeBtn"
+                                data-dismiss="modal">取消
+                        </button>
+                        <button type="submit" id="submit_add" class="btn btn-primary">添加</button>
+                    </div> <!-- modal-footer -->
+                </div> <!-- /.modal-content -->
+            </form>
+        </div> <!-- /.modal-dialog -->
+    </div>
+    <!--.modal-->
+
+    <!-- 修改模态框，单击修改按钮，弹出表单 -->
+    <div class="modal fade" id="updateGoods" tabindex="-1" role="dialog" data-toggle="modal"
+         aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+
+        <div class="modal-dialog" style="width: 400px">
+            <form class="addAdminform" th:action="@{/goods-order/updateGoodsOrder}" method="post" id="updateCheck">
+                <div class="modal-content">
+                    <div class="modal-header"
+                         style="background-color: #00a0f0; color: white;">
+                        <button type="button" class="close" data-dismiss="modal"
+                                aria-hidden="true">&times;
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel2">修改订单信息</h4>
+                    </div>
+                    <!-- .modal-header -->
+                    <div class="modal-body addModal">
+                        <input type="hidden" name="orderId" value="" id="orderIdUpdate"/>
+                        <!--<input type="hidden" name="status" value="1" id="status"/>-->
+                        <div>
+                            <div>
+                                <label>用户ID</label>
+                                <input type="text" value="" id='userIdUpdate' class="form-control" name="userId"
+                                       title="" required="" readonly="readonly"/>
+                            </div>
+                            <div>
+                                <label>商品ID</label>
+                                <input type="text" value="" id='goodsIdUpdate' class="form-control" name="goodsId"
+                                       title="" required="" readonly="readonly"/>
+                            </div>
+                            <div>
+                                <label>地址ID</label>
+                                <input type="text" value="" id='addressIdUpdate' class="form-control" name="addressId"
+                                       title="" required="" />
+                            </div>
+                            <div>
+                                <label>购买数量</label>
+                                <input type="text" value="" id='numberUpdate' class="form-control" name="goodsNum"
+                                       title="" required="" />
+                            </div>
+                            <div>
+                                <label>备注</label>
+                                <input type="text" value="" id='remarkUpdate' class="form-control" name="remark"
+                                       title="" required="" />
+                            </div>
+                    </div>
+                    <!-- modal-body -->
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default closeBtn"
+                                data-dismiss="modal">取消
+                        </button>
+                        <button type="submit" id="submit_update" class="btn btn-primary">修改</button>
+                    </div> <!-- modal-footer -->
+                </div> <!-- /.modal-content -->
+                </div>
+            </form>
+        </div> <!-- /.modal-dialog -->
+    </div>
+    <!--.modal-->
+
+
+    <!-- 删除模态框，单击修改按钮，弹出表单 -->
+    <div class="modal fade" id="deleteGoods" tabindex="-1" role="dialog" data-toggle="modal"
+         aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+
+        <div class="modal-dialog" style="width: 400px">
+            <form class="addAdminform" th:action="@{/goods-order/deleteGoodsOrder}" method="post" id="deleteCheck">
+                <div class="modal-content">
+                    <div class="modal-header"
+                         style="background-color: #00a0f0; color: white;">
+                        <button type="button" class="close" data-dismiss="modal"
+                                aria-hidden="true">&times;
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel3">删除订单信息</h4>
+                    </div>
+                    <!-- .modal-header -->
+                    <div class="modal-body addModal">
+                        <input type="hidden" name="orderId" value="" id="deleteOrderId"/>
+                    </div>
+                    <!-- modal-body -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default closeBtn"
+                                data-dismiss="modal">取消
+                        </button>
+                        <button type="submit" id="submit_delete" class="btn btn-primary">删除</button>
+                    </div> <!-- modal-footer -->
+                </div> <!-- /.modal-content -->
+            </form>
+        </div> <!-- /.modal-dialog -->
+    </div>
+    <!--.modal-->
+
+    <script>
+        $(".goodsOrderEdit1").click(function (){
+            var orderId = $(this).parent().parent().children().eq(1).text();
+            var goodsId = $(this).parent().parent().children().eq(2).text();
+            var userId = $(this).parent().parent().children().eq(3).text();
+            var addressId = $(this).parent().parent().children().eq(4).text();
+            var goodsNum = $(this).parent().parent().children().eq(7).text();
+            var remark = $(this).parent().parent().children().eq(14).text();
+            $("#orderIdUpdate").val(goodsId);
+            $("#goodsIdUpdate").val(goodsId);
+            $("#userIdUpdate").val(userId);
+            $("#addressIdUpdate").val(addressId);
+            $("#numberUpdate").val(goodsNum);
+            $("#remarkUpdate").val(remark);
+        })
+
+        $(".goodsOrderEdit2").click(function () {
+            var orderId = $(this).parent().parent().children().eq(1).text();
+            $("#deleteOrderId").val(cartId);
+        })
+
+    </script>
+
+    <script th:inline="javascript">
+        var msg = [[${msg}]];
+        $(document).ready(function () {
+            if(msg!=null){
+                swal({
+                    title : "温馨提示",
+                    text : msg
+                });
+            }
+        });
+    </script>
 </body>
 </html>

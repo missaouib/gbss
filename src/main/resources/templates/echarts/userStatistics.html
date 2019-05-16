@@ -1,12 +1,8 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-
 <head>
-
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-<title>GBSS | Dashboard</title>
+    <meta charset="UTF-8"/>
+    <title>GBSS | 用户统计</title>
 
     <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" />
     <link th:href="@{/font-awesome/css/font-awesome.css}" rel="stylesheet" />
@@ -41,22 +37,39 @@
     <script th:src="@{/js/echarts.js}"></script>
 
 </head>
-
 <body>
-    <div id="wrapper">
-    	<nav class="navbar-default navbar-static-side" role="navigation" th:include="/commons/nav :: navigation"></nav>
-	    <div id="page-wrapper" class="gray-bg">
-        	<div class="border-bottom" th:include="/commons/header :: headerTop"></div>
-            <div class="wrapper wrapper-content">
-
-            <!-- 为 ECharts 准备一个具备大小（宽高）的 DOM -->
-            <div id="main" style="width: 600px;height:400px;"></div>
-
-
+<div id="wrapper">
+    <nav class="navbar-default navbar-static-side" role="navigation" th:include="/commons/nav :: navigation"></nav>
+    <div id="page-wrapper" class="gray-bg">
+        <div class="border-bottom" th:include="/commons/header :: headerTop"></div>
+        <div class="row wrapper border-bottom white-bg page-heading" th:fragment="headerNav">
+            <div class="col-lg-10">
+                <h2>用户统计</h2>
+                <ol class="breadcrumb">
+                    <li>
+                        <a th:href="@{/admin/dashboard}">首页</a>
+                    </li>
+                    <li>
+                        <a>统计分析</a>
+                    </li>
+                    <li class="active">
+                        <strong>用户统计</strong>
+                    </li>
+                </ol>
             </div>
-        	<div class="footer" th:include="/commons/footer :: footer"></div>
+            <div class="col-lg-2">
+            </div>
         </div>
+
+        <!-- 为 ECharts 准备一个具备大小（宽高）的 DOM -->
+        <div id="main" style="width: 600px;height:400px;"></div>
+
+        <!--<input type="hidden" th:value="${skirt}" id="skirt"/>
+        <input type="hidden" th:value="${nums}" id="nums"/>-->
+
+        <div class="footer" th:include="/commons/footer :: footer"></div>
     </div>
+</div>
 
     <script th:inline="javascript">
         // 基于准备好的dom，初始化echarts实例
@@ -104,8 +117,11 @@
                 }
             ]
         };
+
         // 使用刚指定的配置项和数据显示图表。
         myChart.setOption(option);
+
+
 
     </script>
 </body>

@@ -1,9 +1,12 @@
 package cn.edu.nchu.gbss.controller;
 
 
+import cn.edu.nchu.gbss.mapper.GoodsDao;
+import cn.edu.nchu.gbss.mapper.GoodsOrderDao;
 import cn.edu.nchu.gbss.model.*;
 import cn.edu.nchu.gbss.service.UserBaseService;
 import cn.edu.nchu.gbss.service.UserDetailService;
+import cn.edu.nchu.gbss.util.MD5Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
@@ -31,6 +35,10 @@ public class UserBaseController {
 
     @Autowired
     private UserDetailService userDetailService;
+
+    @Autowired
+    private GoodsDao goodsDao;
+
     /**
      * @description: 用户信息初始页面，显示所有状态有效的用户信息
      * @param:
@@ -63,6 +71,8 @@ public class UserBaseController {
     @RequestMapping("/addUser")
     public String addUser(UserBase userBase, String ip,String cname,Model model){
         if (userBaseService.isExitUserBase(userBase)){
+            String password = MD5Util.string2MD5(userBase.getPassword());
+            userBase.setPassword(password);
             userBaseService.addUserBase(userBase);
             UserBase userBaseByName = userBaseService.findUserBaseByName(userBase.getUserName());
             UserDetail userDetail = new UserDetail();
@@ -105,16 +115,44 @@ public class UserBaseController {
     @RequestMapping("/deleteUser")
     public String deleteUser(UserBase userBase,Model model){
         UserDetail userDetailByUserId = userDetailService.findUserDetailByUserId(userBase.getUserId());
-        if (userDetailService.deleteUserDetail(userDetailByUserId)){
+        if (userDetailByUserId == null){
             if (userBaseService.deleteUserBase(userBase)){
                 model.addAttribute("msg","用户信息删除成功");
             }else {
                 model.addAttribute("msg","用户信息删除失败");
             }
         }else {
-            model.addAttribute("msg","用户详情删除失败");
+            if (userDetailService.deleteUserDetail(userDetailByUserId)){
+                if (userBaseService.deleteUserBase(userBase)){
+                    model.addAttribute("msg","用户信息删除成功");
+                }else {
+                    model.addAttribute("msg","用户信息删除失败");
+                }
+            }else {
+                model.addAttribute("msg","用户详情删除失败");
+            }
         }
+
         return userBase(model);
+    }
+
+    @RequestMapping("/recommend")
+    public String recommend(Model model){
+        List<Goods> goodsList = goodsDao.top5goods();
+        model.addAttribute("goodsList",goodsList);
+        return "user/userRecommend";
+    }
+
+    /**
+     * @description: 根据用户信息为其推荐商品
+     * @param:
+     * @return:
+     */
+    @RequestMapping("/findGoodsForYou")
+    public String findGoodsForYou(UserBase userBase,Model model){
+        List<Goods> goodsList = goodsDao.top10goods();
+        model.addAttribute("goodsList",goodsList);
+        return "user/userRecommend";
     }
 }
 

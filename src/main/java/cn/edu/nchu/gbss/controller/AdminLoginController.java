@@ -2,15 +2,18 @@ package cn.edu.nchu.gbss.controller;
 
 import cn.edu.nchu.gbss.model.Admin;
 import cn.edu.nchu.gbss.service.AdminService;
+import cn.edu.nchu.gbss.util.ConstantUtils;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.mapper.Wrapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 /**
@@ -42,13 +45,11 @@ public class AdminLoginController {
      * @return:
      */
     @PostMapping ("/login")
-    public String loginPost(Admin admin, Model model, HttpSession httpSession) {
-        System.out.println(admin.toString());
-        Wrapper<Admin> wrapper=new EntityWrapper<>();
-        wrapper.eq("user_name",admin.getUserName()).eq("password",admin.getPassword()).eq("status","1");
-        Admin adminRes = adminService.selectOne(wrapper);
-        if (adminRes != null) {
-            httpSession.setAttribute("admin", adminRes);
+    public String loginPost(String account, String password, Model model, HttpServletRequest request) {
+        Admin admin = adminService.judgeLogin(account, password);
+        if (admin != null) {
+            request.getSession().setAttribute(ConstantUtils.USER_SESSION_KEY,admin);
+            model.addAttribute("adminU",admin.getUserName());
             return "redirect:dashboard";
         } else {
             model.addAttribute("error", "用户名或密码错误，请重新登录！");
@@ -62,12 +63,23 @@ public class AdminLoginController {
      * @return:
      */
     @RequestMapping ("/logout")
-    public String logoutGet(Model model){
+    public String logoutGet(HttpSession httpSession){
+        httpSession.removeAttribute(ConstantUtils.USER_SESSION_KEY);
         return "admin/login";
     }
 
-    @RequestMapping("/register")
-    public String registerPost(Admin admin,Model model,HttpSession httpSession){
+    @GetMapping("/register")
+    public String registerGet(Model model){
+        return "admin/register";
+    }
+
+    /**
+     * @description: 管理员注册信息
+     * @param:
+     * @return:
+     */
+    @PostMapping ("/register")
+    public String registerPost(Admin admin, Model model, HttpSession httpSession){
         Wrapper<Admin> wrapper=new EntityWrapper<>();
         //wrapper.eq("user_name",admin.getUserName()).or().eq("email",admin.getEmail()).or().eq("telephone",admin.getTelephone()).ne("status","1");
         if(adminService.selectOne(wrapper.eq("user_name",admin.getUserName())) != null){
@@ -85,11 +97,11 @@ public class AdminLoginController {
         System.out.println(admin.toString());
         admin.setStatus("1");
         if(adminService.insert(admin)) {
-            return "redirect:login";
+            model.addAttribute("msg","账号注册成功");
+            return "admin/register";
         }else {
             model.addAttribute("msg","账号注册失败");
             return "admin/register";
         }
     }
-
 }

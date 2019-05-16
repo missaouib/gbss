@@ -124,6 +124,8 @@
                                             <td class="col-md-1">管理员ID </td>
                                             <td class="col-md-1">规则名称</td>
                                             <td class="col-md-1">规则描述</td>
+                                            <td class="col-md-1">等级系数</td>
+                                            <td class="col-md-1">积分系数</td>
                                             <td class="col-md-1">创建时间</td>
                                             <td class="col-md-1">操作</td>
                                         </tr>
@@ -135,6 +137,8 @@
                                             <td th:text="${userPointRules.adminId}"></td>
                                             <td th:text="${userPointRules.name}"></td>
                                             <td th:text="${userPointRules.description}"></td>
+                                            <td th:text="${userPointRules.levelCo}"></td>
+                                            <td th:text="${userPointRules.pointCo}"></td>
                                             <td th:text="${#dates.format(userPointRules.createDate,'yyyy-MM-dd HH:mm:ss')}"></td>
                                             <td>
                                                 <a data-toggle="modal" data-target="#updateUserPointRules" title="修改" class="userPointRulesEdit1"><i class="fa fa-edit text-navy"></i></a>
@@ -185,6 +189,17 @@
                             <input type="text" value="" id='descriptionAdd' class="form-control" name="description"
                                    title="" required=""/>
                         </div>
+                        <div>
+                            <label>等级系数</label>
+                            <input type="text" value="" id='levelCoAdd' class="form-control" name="description"
+                                   title="" required=""/>
+                        </div>
+                        <div>
+                            <label>积分系数</label>
+                            <input type="text" value="" id='pointCoAdd' class="form-control" name="description"
+                                   title="" required=""/>
+                        </div>
+
                     </div>
                     <!-- modal-body -->
 
@@ -233,6 +248,17 @@
                             <input type="text" value="" id='descriptionUpdate' class="form-control" name="description"
                                    title="" required=""/>
                         </div>
+                        <div>
+                            <label>等级系数</label>
+                            <input type="text" value="" id='levelCoUpdate' class="form-control" name="description"
+                                   title="" required=""/>
+                        </div>
+                        <div>
+                            <label>积分系数</label>
+                            <input type="text" value="" id='pointCoUpdate' class="form-control" name="description"
+                                   title="" required=""/>
+                        </div>
+
                     </div>
                     <!-- modal-body -->
 
@@ -286,10 +312,14 @@
             var adminId = $(this).parent().parent().children().eq(2).text();
             var name = $(this).parent().parent().children().eq(3).text();
             var description = $(this).parent().parent().children().eq(4).text();
+            var levelCo = $(this).parent().parent().children().eq(5).text();
+            var pointCo = $(this).parent().parent().children().eq(6).text();
             $("#ruleId").val(ruleId);
             $("#adminIdUpdate").val(adminId);
             $("#nameUpdate").val(name);
             $("#descriptionUpdate").val(description);
+            $("#levelCoUpdate").val(levelCo);
+            $("#pointCoUpdate").val(pointCo);
         })
 
         $(".userPointRulesEdit2").click(function () {

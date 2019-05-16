@@ -144,7 +144,11 @@
                                             <td th:text="${goods.stock}"></td>
                                             <td th:text="${goods.warnStock}"></td>
                                             <td th:text="${goods.goodsPoint}"></td>
+                                            <!--<td style="vertical-align:bottom; text-align:center;">
+                                                <img th:src="${goods.pictureUrl}" />
+                                            </td>-->
                                             <td th:text="${goods.pictureUrl}"></td>
+
                                             <td th:text="${#dates.format(goods.creatTime,'yyyy-MM-dd HH:mm:ss')}"></td>
                                             <td>
                                                 <a data-toggle="modal" data-target="#updateGoods" title="修改" class="goodsEdit1"><i class="fa fa-edit text-navy"></i></a>

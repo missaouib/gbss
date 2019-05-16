@@ -132,6 +132,7 @@
                                             <td class="col-md-1">头像url</td>
                                             <td class="col-md-1">出生日期</td>
                                             <td class="col-md-1">注册ip</td>
+                                            <td class="col-md-1">注册城市</td>
                                             <td class="col-md-1">注册日期</td>
                                             <td class="col-md-1">操作</td>
                                         </tr>
@@ -149,6 +150,7 @@
                                             <td th:text="${userDetail.faceUrl}"></td>
                                             <td th:text="${userDetail.birthday}"></td>
                                             <td th:text="${userDetail.registIp}"></td>
+                                            <td th:text="${userDetail.registCity}"></td>
                                             <td th:text="${#dates.format(userDetail.registTime,'yyyy-MM-dd HH:mm:ss')}"></td>
                                             <td>
                                                 <a data-toggle="modal" data-target="#updateUserDetail" title="修改" class="userDetailEdit1" ><i class="fa fa-edit text-navy"></i></a>

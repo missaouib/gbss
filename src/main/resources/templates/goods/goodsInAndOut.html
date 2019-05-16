@@ -112,27 +112,27 @@
                                 </div>
                             </div>
                             <div class="ibox-content">
-                                <div class="table-responsive">
-                                    <table class=" table table-hover" data-page-size="10">
+                                <div class="table-responsive" style="overflow: scroll">
+                                    <table class=" table table-hover" data-page-size="10" style="width: 1500px">
                                         <thead>
                                         <tr align="center">
                                             <td width="1%"><input type="checkbox" style="margin-right: 5px" name="allcheck"/></td>
-                                            <td class="col-md-1">进销存表ID</td>
-                                            <td class="col-md-1">商品ID</td>
-                                            <td class="col-md-1">管理员ID</td>
-                                            <td class="col-md-1">出入库数量</td>
-                                            <td class="col-md-1">单价(￥)</td>
-                                            <td class="col-md-1">小计金额</td>
-                                            <td class="col-md-1">旧库存</td>
-                                            <td class="col-md-1">新库存</td>
-                                            <td class="col-md-1">出入库方向</td>
-                                            <td class="col-md-1">出入库类型</td>
-                                            <td class="col-md-1">订单编号</td>
-                                            <td class="col-md-1">供应商编号</td>
+                                            <td>进销存表ID</td>
+                                            <td>商品ID</td>
+                                            <td>管理员ID</td>
+                                            <td>出入库数量</td>
+                                            <td>单价(￥)</td>
+                                            <td>小计金额</td>
+                                            <td>旧库存</td>
+                                            <td>新库存</td>
+                                            <td>出入库方向</td>
+                                            <td>出入库类型</td>
+                                            <td>订单编号</td>
+                                            <td>供应商编号</td>
                                             <td class="col-md-1">备注信息</td>
-                                            <td class="col-md-1">出入库结果</td>
-                                            <td class="col-md-1">出入库日期</td>
-                                            <td class="col-md-1">操作</td>
+                                            <td>出入库结果</td>
+                                            <td>出入库日期</td>
+                                            <td>操作</td>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -194,8 +194,8 @@
                         </div>
                         <div>
                             <label>管理员ID</label>
-                            <input type="text" value="" id='adminIdAdd' class="form-control" name="adminId"
-                                   title="" required="" />
+                            <input type="text" th:value="${session.ADMIN.getAdminId()}" id='adminIdAdd' class="form-control" name="adminId"
+                                   title="" required="" readonly="readonly"/>
                         </div>
                         <div>
                             <label>出入库数量</label>

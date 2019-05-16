@@ -24,7 +24,7 @@
     <div class="middle-box text-center loginscreen   animated fadeInDown">
         <div>
             <h3>集团商务销售管理系统</h3>
-            <form class="m-t" role="form" action="/admin/register" method="post">
+            <form class="m-t" role="form" id="regeistForm" method="post">
                 <div class="form-group">
                     <input type="text" class="form-control" placeholder="Name" id="userName" name="userName" required=""/>
                 </div>
@@ -35,12 +35,12 @@
                     <input type="password" class="form-control" placeholder="Password" id="password" name="password" required=""/>
                 </div>
                 <div class="form-group">
-                    <input type="password" class="form-control" placeholder="Telephone" id="telephone" name="telephone" required=""/>
+                    <input type="text" class="form-control" placeholder="Telephone" id="telephone" name="telephone" required=""/>
                 </div>
                 <div class="form-group">
                         <div class="checkbox i-checks"><label> <input type="checkbox"/><i></i> Agree the terms and policy </label></div>
                 </div>
-                <button type="submit" class="btn btn-primary block full-width m-b" onclick="check()">Register</button>
+                <button class="btn btn-primary block full-width m-b" id="register" >Register</button>
 
                 <p class="text-muted text-center"><small>Already have an account?</small></p>
                 <a class="btn btn-sm btn-white btn-block" th:action="@{/admin/login}" >Login</a>
@@ -64,7 +64,8 @@
             });
         });
 
-        function check() {
+        
+        $("#register").click(function () {
             var name= $('#userName').val();
             var email = $('#email').val();
             var telephone = $('#telephone').val();
@@ -74,35 +75,44 @@
             var judge_telephone = /^1\d{10}$/ ;  //验证手机号的正则表达式
             var judge_name = /^[0-9]+.?[0-9]*$/; //验证用户名是否为数字
             var judge_password = /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{5,15}$/; //验证密码,6-16位，由数字和字母组成
+
             if(judge_name.test(name)){
                 swal({
                     title : "温馨提示",
                     text : "用户名不能为纯数字"
                 });
                 //alert("用户名不能为纯数字");
-            }
-            if(judge_email.test(email)){
-                swal({
-                    title : "温馨提示",
-                    text : "邮箱格式错误"
-                });
-                //alert("用户名不能为纯数字");
-            }
-            if(judge_telephone.test(telephone)){
-                swal({
-                    title : "温馨提示",
-                    text : "手机号码格式不对"
-                });
-                //alert("用户名不能为纯数字");
-            }
-            if(judge_password.test(password)){
-                swal({
-                    title : "温馨提示",
-                    text : "密码由数字和字母组成，长度6-16位"
-                });
-                //alert("用户名不能为纯数字");
-            }
-        }
+            }else {
+                if(judge_email.test(email)) {
+                    if (judge_telephone.test(telephone)) {
+                        if (judge_password.test(password)) {
+                            $.ajax({
+                                type: "post",
+                                url: "/admin/register",
+                                data: $("#regeistForm").serialise(),
+                                async: false
+                            })
+                        } else {
+                            swal({
+                                title: "温馨提示",
+                                text: "密码由数字和字母组成，长度6-16位"
+                            });
+                        }
+                    } else {
+                        swal({
+                            title: "温馨提示",
+                            text: "手机号码格式不对"
+                        });
+                    }
+                } else
+                    {
+                        swal({
+                            title: "温馨提示",
+                            text: "邮箱格式错误"
+                        });
+                    }
+                }
+        })
     </script>
 
     <script th:inline="javascript">
@@ -116,8 +126,6 @@
             }
         });
     </script>
-
-
 </body>
 
 </html>

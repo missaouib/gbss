@@ -2,6 +2,8 @@ package cn.edu.nchu.gbss.service;
 
 import cn.edu.nchu.gbss.model.UserBase;
 import cn.edu.nchu.gbss.model.UserBase;
+import com.baomidou.mybatisplus.mapper.Wrapper;
+import com.baomidou.mybatisplus.plugins.Page;
 import com.baomidou.mybatisplus.service.IService;
 
 import java.util.List;
@@ -28,6 +30,5 @@ public interface UserBaseService extends IService<UserBase> {
     List<UserBase> selectAllUserBase();
 
     List<UserBase> selectByCondition(UserBase userBase);
-
 
 }

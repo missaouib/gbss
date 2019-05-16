@@ -2,6 +2,7 @@ package cn.edu.nchu.gbss;
 
 import cn.edu.nchu.gbss.mapper.AdminDao;
 import cn.edu.nchu.gbss.model.Admin;
+import cn.edu.nchu.gbss.model.UserDetail;
 import cn.edu.nchu.gbss.service.*;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.mapper.Wrapper;
@@ -11,7 +12,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
+import javax.script.ScriptException;
 import java.util.List;
+import java.util.Map;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -37,6 +42,8 @@ public class GbssApplicationTests {
 
     @Autowired
     private GoodsDescriptionService goodsDescriptionService;
+    @Autowired
+    private UserDetailService userDetailService;
 
 
 
@@ -132,7 +139,8 @@ public class GbssApplicationTests {
     }
 
     @Test
-    public void testAddAdminRole(){
+    public void testAddAdminRole() throws ScriptException {
+
 
     }
 
